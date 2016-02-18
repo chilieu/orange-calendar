@@ -1,0 +1,3 @@
+# Force the "www."
+RewriteCond %{HTTP_HOST} !^www\.cloudberry\.hosting$ [NC]
+RewriteRule ^(.*)$ http://www.cloudberry.hosting/$1 [R=301,L]
