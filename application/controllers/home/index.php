@@ -10,6 +10,10 @@ class Index extends Front_Controller
 	public function index()
 	{
         $this->load->library('csvreader');
+		$this->load->model('Events_model');
+		$this->load->model('Rooms_model');
+		$this->load->model('Contacts_model');
+
 
         $result = $this->csvreader->parse_file('./public/Test2016VACMasterCalendar.csv');//path to csv file
 
@@ -24,6 +28,14 @@ class Index extends Front_Controller
         	if( $value['MONTH'] == 'FEB.2016' ) $tmp = " Feb, 2016";
 
         	if(  empty($value['EVENTS']) ) continue;
+
+        	//get contact id
+        	$contact['name'] = $value['Contact'];
+        	$data['contact_id'] = $this->Contacts_model->insertIfNotExists( $contact );
+
+        	//get room id
+        	$room['room'] = $value['PLACE / Room(s) use'];
+        	$data['room_id'] = $this->Rooms_model->insertIfNotExists( $room );
 
         	if( !empty($value['DATE']) && empty($value['MONTH']) ){
         		$value['DATE'] = $value['DATE'] . $tmp;
