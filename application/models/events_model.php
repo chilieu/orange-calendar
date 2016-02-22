@@ -21,6 +21,9 @@ class Events_model extends CI_Model {
 
     function getByEvent($name)
     {
+    	$name = trim($name);
+    	if( empty($name) ) return;
+
     	$this->db->from($this->table);
     	$this->db->where('event', $name);
     	$query = $this->db->get();

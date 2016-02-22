@@ -14,7 +14,9 @@ class Contacts_model extends CI_Model {
 
     function insertIfNotExists($data)
     {
-    	$name = $data['name'];
+    	$name = trim($data['name']);
+    	if( empty($name) ) return;
+
     	$q = $this->getByName($name);
     	if( $q->num_rows() > 0 )
     	{

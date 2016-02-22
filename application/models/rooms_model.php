@@ -14,7 +14,9 @@ class Rooms_model extends CI_Model {
 
     function insertIfNotExists($data)
     {
-    	$name = $data['room'];
+    	$name = trim($data['room']);
+    	if( empty($name) ) return;
+
     	$q = $this->getByRoom($name);
     	if( $q->num_rows() > 0 )
     	{
@@ -34,15 +36,15 @@ class Rooms_model extends CI_Model {
     function getByRoom($name)
     {
     	$this->db->from($this->table);
-    	$this->db->where('room', $name);
-    	$query = $this->db->get();
+    	$this->db->where('room', trim($name) );
+    	return $this->db->get();
     }
 
     function getById($id)
     {
     	$this->db->from($this->table);
     	$this->db->where('id', $id);
-    	$query = $this->db->get();
+    	return $this->db->get();
     }
 
 }
