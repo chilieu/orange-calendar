@@ -10,15 +10,17 @@ class Index extends Front_Controller
 
 	public function index()
 	{
+		$this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array(), true);
 		$this->render( $this->layout );
 	}
 
 	public function data()
 	{
+		exit;
         $this->load->library('csvreader');
-		$this->load->model('Events_model');
-		$this->load->model('Rooms_model');
-		$this->load->model('Contacts_model');
+		$this->load->model('Event_model');
+		$this->load->model('Room_model');
+		$this->load->model('Contact_model');
 
         $result = $this->csvreader->parse_file('./public/Test2016VACMasterCalendar.csv');//path to csv file
 
@@ -59,26 +61,39 @@ class Index extends Front_Controller
         	if(  empty($value['EVENTS']) ) continue;
         	//print_r($month);echo "<br>";
         	if( !empty($value['DATE']) && !empty($value['EVENTS']) ){
+        		$event = array();
 	        	//get contact id
-	        	$data['contact_id'] = $this->Contacts_model->insertIfNotExists( $contact );
+	        	$data['contact_id'] = $this->Contact_model->insertIfNotExists( $contact );
 
 	        	//get room id
-	        	$data['room_id'] = $this->Rooms_model->insertIfNotExists( $room );
+	        	$data['room_id'] = $this->Room_model->insertIfNotExists( $room );
 
-        		$value['DATE'] = $value['DATE'] ." ". strtolower($month);
+        		$value['DATE'] = $value['DATE'] ." ". strtolower($month) . " noon";
         		$d = strtotime($value['DATE']);
+        		echo $value['DATE'] . "<br>";
+        		echo $d . "<br>";
 
         		$value['DATETIME'] = date("F j, Y", $d);
-        		$event = array();
+
+        		$time = explode("-", $value['TIME']);
+        		//print_r($time);
+        		if( is_array($time) && count($time) > 1 ) {
+    	    		$tmp1 = strtotime($value['DATETIME'] ." ". trim($time[0]) );
+	        		$tmp2 = strtotime($value['DATETIME'] ." ". trim($time[1]) );
+        		} else {
+        			$tmp1 = $tmp2 = $d;
+        			$event['notes'] = $value['TIME'];
+        		}
+
         		$event['event'] = $value['EVENTS'];
         		$event['date'] = $d;
-        		$event['time_from'] = $d;
-        		$event['time_to'] = $d;
+        		$event['time_from'] = $tmp1;
+        		$event['time_to'] = $tmp2;
         		$event['room_id'] = $data['room_id'];
         		$event['contact_id'] = $data['contact_id'];
-        		//$this->Events_model->insert($event);
-        		print_r($value);
-        		print_r($event);
+        		//$this->Event_model->insert($event);
+        		//print_r($value);
+        		//print_r($event);
 
         	}
 

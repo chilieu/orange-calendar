@@ -1,7 +1,7 @@
 <?php if ( !defined('BASEPATH') ) exit('No direct script access allowed');
 
 
-class Events_model extends CI_Model {
+class Event_model extends CI_Model {
 
 	var $table;
 
@@ -9,7 +9,7 @@ class Events_model extends CI_Model {
     {
         parent::__construct();
 
-        $this->table = 'events';
+        $this->table = 'event';
     }
 
 
@@ -35,4 +35,14 @@ class Events_model extends CI_Model {
     	$this->db->where('id', $id);
     	$query = $this->db->get();
     }
+
+    function getAll()
+    {
+        $this->db->from( $this->table );
+        $this->db->join('room', 'room.id = event.room_id');
+        $this->db->join('contact', 'contact.id = event.contact_id');
+        $this->db->order_by("date", "asc");
+        return $this->db->get();
+    }
+
 }

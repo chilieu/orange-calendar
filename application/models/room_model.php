@@ -1,7 +1,7 @@
 <?php if ( !defined('BASEPATH') ) exit('No direct script access allowed');
 
 
-class Contacts_model extends CI_Model {
+class Room_model extends CI_Model {
 
 	var $table;
 
@@ -9,15 +9,15 @@ class Contacts_model extends CI_Model {
     {
         parent::__construct();
 
-        $this->table = 'contacts';
+        $this->table = 'room';
     }
 
     function insertIfNotExists($data)
     {
-    	$name = trim($data['name']);
+    	$name = trim($data['room']);
     	if( empty($name) ) return;
 
-    	$q = $this->getByName($name);
+    	$q = $this->getByRoom($name);
     	if( $q->num_rows() > 0 )
     	{
     		$r = $q->row_array();
@@ -33,18 +33,18 @@ class Contacts_model extends CI_Model {
 		return $this->db->insert_id();
     }
 
-    function getByName($name)
+    function getByRoom($name)
     {
-    	$this->db->from( $this->table );
-    	$this->db->where('name', $name);
-    	return $query = $this->db->get();
+    	$this->db->from($this->table);
+    	$this->db->where('room', trim($name) );
+    	return $this->db->get();
     }
 
     function getById($id)
     {
     	$this->db->from($this->table);
     	$this->db->where('id', $id);
-    	return $query = $this->db->get();
+    	return $this->db->get();
     }
 
 }

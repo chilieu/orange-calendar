@@ -52,5 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$route['default_controller'] = 'under-contruction';
 $route['default_controller'] = 'home/index';
 //$route['default_controller'] = 'deal';
+
+//$route['reservation'] = 'home/index';
+$route['administrator'] = 'admin/index';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
