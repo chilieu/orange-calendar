@@ -84,7 +84,11 @@
 </div>
 
 <script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
+
+$( document ).ready(function() {
+    $('#datetimepicker1').datetimepicker();
+
+    $('#datetimepicker2').datetimepicker();
+});
+
 </script>
