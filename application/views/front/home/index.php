@@ -22,12 +22,12 @@
 	    <small class="text-muted">We'll never share your email and phone number with anyone else.</small>
   	</div>
 
-  	<div class="form-group col-md-12">
+  	<div class="form-group col-md-6">
 	    <label for="exampleInputEmail1">Email address</label>
 	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="YourEmail@example.com">
   	</div>
 
-  	<div class="form-group col-md-12">
+  	<div class="form-group col-md-6">
 	    <label for="exampleInputEmail1">Phone</label>
 	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="(xxx)-xxx-xxxx">
   	</div>
@@ -43,25 +43,28 @@
 	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Lễ Phục Sinh - Easter Sunday - Sunrise Joint Service	">
   	</div>
 
-	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">Start</label>
-        <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
-  	</div>
 
-	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">End</label>
-        <div class='input-group date' id='datetimepicker2'>
-            <input type='text' class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+    <div class='col-md-6'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
-  	</div>
+    </div>
+    <div class='col-md-6'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
 
   	<div class="form-group col-md-12">
 	    <label for="exampleInputEmail1">Room</label>
@@ -86,9 +89,13 @@
 <script type="text/javascript">
 
 $( document ).ready(function() {
-    $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker1').datetimepicker({
+                sideBySide: true
+            });
 
-    $('#datetimepicker2').datetimepicker();
+    $('#datetimepicker2').datetimepicker({
+                sideBySide: true
+            });
 });
 
 </script>
