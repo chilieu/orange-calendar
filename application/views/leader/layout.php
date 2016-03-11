@@ -31,7 +31,6 @@
 
   </head>
   <body>
-
 <nav class="navbar navbar-default ">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -44,9 +43,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Reservation</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
+        <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Reservation</a></li>
+        <li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -57,7 +55,7 @@
 
     <div class="container">
 
-	<?=@$_body?>
+    <?=@$_body?>
 
     </div><!-- /.container -->
 

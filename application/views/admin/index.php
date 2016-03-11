@@ -1,6 +1,6 @@
 <style type="text/css">
 .table {
-	table-layout:fixed;
+    table-layout:fixed;
 }
 
 .table td {
@@ -30,7 +30,7 @@
 
                 <tbody>
                 <?php foreach ($events->result() as $row):?>
-                	<tr>
+                    <tr>
                         <td class="hide"><?=$row->id?></td>
                         <td><?=date("F j, Y", $row->date)?></td>
                         <td><?=$row->event?></td>
@@ -38,10 +38,10 @@
                         <td><?=date("h:i A", $row->time_from)?></td>
                         <td><?=date("h:i A", $row->time_to)?></td>
                         <td><?=$row->name?></td>
-                	</tr>
-            	<?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>
                 </tbody>
-		</table>
+        </table>
 
     </div>
     </div>

@@ -14,7 +14,7 @@ class Index extends Admin_Controller
 		$events = array();
 		$events = $this->Event_model->getAll();
 
-		$this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('events' => $events), true);
+		$this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('events' => $events), true);
 		$this->render( $this->layout );
 	}
 
