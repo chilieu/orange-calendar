@@ -33,6 +33,40 @@
     <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
+    <script type="text/javascript">
+    $(document).ready(function() {
+            initGrowls();
+    });
+
+    function addGrowlMessage(type, message) {
+            var str = '<div class="growl growl-large growl-';
+            if (type == 0) {
+                    str += 'notice">';
+            } else {
+                    str += 'error">';
+            }
+            str += '<div class="growl-close">x</div><div class="growl-title">';
+            if (type == 0) {
+                    str += 'Success';
+            } else {
+                    str += 'Error';
+            }
+            str += '</div>';
+            str += '<div class="growl-message">' + message + '</div></div>';
+            $('.growl').each(function() { $(this).remove(); });
+            $('body').prepend(str);
+            initGrowls();
+    }
+
+    function initGrowls() {
+            $('.growl').fadeIn('slow');
+            setTimeout(function() { $('.growl').fadeOut('slow', function() { $(this).remove(); }); }, 4000)
+            $('.growl-close').click(function() {
+                    $('.growl').fadeOut('slow', function() { $(this).remove(); });
+            });
+    }
+    </script>
+
 </head>
 
 <body>

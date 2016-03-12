@@ -53,12 +53,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home/index';
 //$route['default_controller'] = 'deal';
 
-$route['administrator'] = 'admin/index';
-$route['administrator-login'] = 'login/admin';
 $route['administrator/(:any)'] = 'admin/$1';
+$route['administrator-login'] = 'login/admin';
+$route['administrator'] = 'admin/index';
 
-$route['leader'] = 'leader/index';
 $route['leader-login'] = 'login/leader';
+$route['leader'] = 'leader/index';
 $route['leader/(:any)'] = 'leader/$1';
 
 $route['404_override'] = '';
