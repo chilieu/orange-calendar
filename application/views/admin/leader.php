@@ -66,7 +66,7 @@
                               <th width="200px">Email</th>
                               <th width="200px">Phone</th>
                               <th>Area</th>
-                              <th width="75px"></th>
+                              <th width="100px"></th>
                           </tr>
                       </thead>
 
@@ -94,13 +94,73 @@
           "sPaginationType": "full_numbers",
           "aaSorting": [[ 0, "desc" ]],
           "aoColumnDefs": [
-             { "bSortable": false, "aTargets": [1] }
+             {
+              "bSortable": false, "aTargets": [1],
+              "sClass": "text-center",
+              "aTargets": [ 0, 1, 2, 3, 4, 5]
+              }
           ],
           "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
           },
           "fnServerParams": function(aoData) {
           },
           "fnDrawCallback": function( oSettings ) {
+          }
+      });
+
+      /* Edit */
+      $(document).on("click", ".edit", function(e){
+        e.preventDefault();
+        var obj = $(this);
+        var id = obj.attr("data-id");
+
+      });
+
+      /* ban */
+      $(document).on("click", ".ban", function(e){
+        e.preventDefault();
+        var obj = $(this);
+        var id = obj.attr("data-id");
+          var result = confirm("Do you want to ban this leader?");
+          if (result) {
+              $.post( "/admin/leader/banLeader/", { id: id })
+                .done(function( data ) {
+                  var data = $.parseJSON(data);
+                  addGrowlMessage(data.status, data.message);
+                  leader_table.ajax.reload();
+              });
+          }
+      });
+
+      /* delete */
+      $(document).on("click", ".delete", function(e){
+        e.preventDefault();
+        var obj = $(this);
+        var id = obj.attr("data-id");
+          var result = confirm("Do you want to delete this leader?");
+          if (result) {
+              $.post( "/admin/leader/deleteLeader/", { id: id })
+                .done(function( data ) {
+                  var data = $.parseJSON(data);
+                  addGrowlMessage(data.status, data.message);
+                  leader_table.ajax.reload();
+              });
+          }
+      });
+
+      /* unban */
+      $(document).on("click", ".unban", function(e){
+        e.preventDefault();
+        var obj = $(this);
+        var id = obj.attr("data-id");
+          var result = confirm("Do you want to re-activate this leader?");
+          if (result) {
+              $.post( "/admin/leader/unbanLeader/", { id: id })
+                .done(function( data ) {
+                  var data = $.parseJSON(data);
+                  addGrowlMessage(data.status, data.message);
+                  leader_table.ajax.reload();
+              });
           }
       });
 

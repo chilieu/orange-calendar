@@ -56,6 +56,50 @@ class Leader extends Admin_Controller
 
     }
 
+    /* this is hard delete */
+    public function deleteLeader()
+    {
+        $id = $this->input->post('id');
+        if( !$id ) return $this->ajaxResponse(1,"ID empty");
+        $this->load->model('Leader_model');
+        $res = $this->Leader_model->delete($id);
+
+        if( !$res ) {
+            return $this->ajaxResponse(1,"System error");
+        } else {
+            return $this->ajaxResponse(0,"the leader has been deleted");
+        }
+    }
+
+    /* this is soft delete */
+    public function banLeader()
+    {
+        $id = $this->input->post('id');
+        if( !$id ) return $this->ajaxResponse(1,"ID empty");
+        $this->load->model('Leader_model');
+        $res = $this->Leader_model->softDelete($id);
+
+        if( !$res ) {
+            return $this->ajaxResponse(1,"System error");
+        } else {
+            return $this->ajaxResponse(0,"the leader has been banned");
+        }
+    }
+
+    /* this is soft delete */
+    public function unbanLeader()
+    {
+        $id = $this->input->post('id');
+        if( !$id ) return $this->ajaxResponse(1,"ID empty");
+        $this->load->model('Leader_model');
+        $res = $this->Leader_model->unSoftDelete($id);
+
+        if( !$res ) {
+            return $this->ajaxResponse(1,"System error");
+        } else {
+            return $this->ajaxResponse(0,"the leader has been re-activated");
+        }
+    }
 
     public function getList()
     {
@@ -81,10 +125,21 @@ class Leader extends Admin_Controller
         $rows = $this->db->get()->result();
         $result = array();
 
-        $action = '<a href="" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a href="" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
-
         foreach ($rows as $r) {
+            $disable = ($r->deleted == 1) ? "disabled" : "";
+
+            $edit = '&nbsp<a ' .$disable. ' href="#" class="btn btn-primary edit" data-id="' .$r->id. '" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp';
+            $ban = '&nbsp<a href="#" class="btn btn-warning ban" data-id="' .$r->id. '" ><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>&nbsp';
+            $unban = '&nbsp<a href="#" class="btn btn-success unban" data-id="' .$r->id. '" ><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>&nbsp';
+            $delete = '&nbsp<a href="#" class="btn btn-danger delete" data-id="' .$r->id. '" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>&nbsp';
+
+            if($r->deleted == 1) {
+                $action = $edit . $unban . $delete ;
+            } else {
+                $action = $edit . $ban . $delete ;
+            }
+
+
             $result[] = array(
                 $r->id,
                 $r->firstname . " " . $r->lastname,

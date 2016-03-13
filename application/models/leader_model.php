@@ -39,4 +39,25 @@ class Leader_model extends CI_Model {
         return $this->db->get();
     }
 
+    function delete($id)
+    {
+        if( !$id ) return;
+        return $this->db->delete($this->table, array('id' => $id));
+    }
+
+    function softDelete($id)
+    {
+        if( !$id ) return;
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, array('deleted' => 1) );
+    }
+
+    function unSoftDelete($id)
+    {
+        if( !$id ) return;
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, array('deleted' => 0) );
+    }
+
+
 }
