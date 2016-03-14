@@ -25,6 +25,13 @@ class Leader_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $re = $this->db->update($this->table, $data);
+        return $id;
+    }
+
     function getByEmail($area)
     {
         $this->db->from($this->table);

@@ -53,9 +53,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home/index';
 //$route['default_controller'] = 'deal';
 
-$route['administrator/(:any)'] = 'admin/$1';
-$route['administrator-login'] = 'login/admin';
 $route['administrator'] = 'admin/index';
+$route['administrator-login'] = 'login/admin';
+$route['administrator-reservation'] = 'admin/leader/reservation/';
+$route['administrator/(:any)'] = 'admin/$1';
 
 $route['leader-login'] = 'login/leader';
 $route['leader'] = 'leader/index';

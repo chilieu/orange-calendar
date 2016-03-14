@@ -22,20 +22,52 @@ class Leader extends Admin_Controller
         $this->render( $this->layout );
     }
 
-    public function test()
+    public function reservation()
     {
-        echo "testset";
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/reservation', array(), true);
+        $this->render( $this->layout );
+    }
+
+    public function detailLeader()
+    {
+        $id = $this->input->post('id');
+        if( !$id ) return $this->ajaxResponse(1,"ID empty");
+
+        $this->load->model('Area_model');
+        $areas = array();
+        $areas = $this->Area_model->getAll();
+
+        $this->load->model('Leader_model');
+        $leader = $this->Leader_model->getById($id)->result_array();
+        $leader = $leader[0];
+        $leader['area'] = explode( ",", $leader['area'] );
+        return $this->load->view('admin/partials/add-leader', array("areas" =>$areas, "leader" => $leader ));
     }
 
     public function addLeader()
     {
         //$this->output->enable_profiler();
         $leader = $this->input->post('leader');
+        $this->load->model('Leader_model');
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
-        $this->form_validation->set_rules('leader[email]', 'Email', 'trim|required|valid_email|is_unique[leader.email]');
+        $this->form_validation->set_rules('leader[area]', 'Areas', 'trim|required');
+
+        if(isset($leader['id'])) {
+
+            $old_leader = $this->Leader_model->getById( $leader['id'] )->result_array();
+            $old_leader = $old_leader[0];
+
+            if( $old_leader['email'] !== $leader['email'] ) {
+                $this->form_validation->set_rules('leader[email]', 'Email', 'trim|required|valid_email|is_unique[leader.email]');
+            }
+
+        } else {
+            $this->form_validation->set_rules('leader[email]', 'Email', 'trim|required|valid_email|is_unique[leader.email]');
+        }
 
         if ($this->form_validation->run() == FALSE)
         {
@@ -45,11 +77,13 @@ class Leader extends Admin_Controller
             return $this->ajaxResponse(1, $error);
         } else {
             //success
-            //print_r($leader);
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
-            $this->load->model('Leader_model');
-            $res = $this->Leader_model->insert($leader);
+            if(isset($leader['id'])) {
+                $res = $this->Leader_model->update($leader['id'], $leader);
+            } else {
+                $res = $this->Leader_model->insert($leader);
+            }
 
             return $this->ajaxResponse(0,"Success");
         }
@@ -155,6 +189,11 @@ class Leader extends Admin_Controller
             'aaData' => $result
         ));
         return;
+    }
+
+    public function is_unique_email($email, $id=0)
+    {
+
     }
 
 }

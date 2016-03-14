@@ -2,55 +2,13 @@
 
 
         <div class="row">
-          <form action="/admin/leader/addLeader/" id="leader-form" class="form1" name="leader_form" method="post">
+
             <fieldset>
-                <legend>Leader</legend>
-
-                      <div class="col-md-6">
-
-                              <div class="form-group col-md-6">
-                                  <label for="exampleInputEmail1">First name</label>
-                                  <input type="text" class="form-control" name="leader[firstname]" id="firstname" placeholder="Leader's First Name" required>
-                              </div>
-
-                              <div class="form-group col-md-6">
-                                  <label for="exampleInputEmail1">Last name</label>
-                                  <input type="text" class="form-control" name="leader[lastname]" id="lastname" placeholder="Leader's Last Name" required>
-                              </div>
-
-                              <div class="form-group col-md-6">
-                                  <label for="exampleInputEmail1">Phone</label>
-                                  <input type="text" class="form-control" name="leader[phone]" id="phone" placeholder="(xxx)-xxx-xxxx">
-                              </div>
-
-                              <div class="form-group col-md-6">
-                                  <label for="exampleInputEmail1">Email</label>
-                                  <input type="email" class="form-control" name="leader[email]" id="email" placeholder="example@email.com">
-                              </div>
-
-                      </div>
-
-                      <div class="col-md-6">
-                              <div class="form-group col-md-12">
-                                  <label for="exampleInputEmail1">Area</label>
-                                  <select multiple class="form-control" size="6" name="leader[area][]">
-                                    <?php foreach($areas->result() as $row):?>
-                                      <option value="<?=$row->area?>"><?=$row->title?></option>
-                                    <?php endforeach;?>
-                                  </select>
-                              </div>
-                      </div>
-
-                      <div class="col-md-12">
-                              <div class="form-group col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary" data-loading-text="Adding ..." id="add-btn">Add</button>
-                                <button type="reset" class="btn btn-default">Reset</button>
-                              </div>
-                      </div>
-
-
+                <legend>Leader <a href="#" class="btn btn-success pull-right" id="add-action">add</a></legend>
+                  <div id="add-leader-contain" class="hide">
+                    <?php $this->load->view('admin/partials/add-leader', array("leader" => $leader )); ?>
+                  </div>
             </fieldset>
-          </form>
         </div>
 
 
@@ -78,6 +36,7 @@
       </div>
 
 </div>
+
 
 <script type="text/javascript">
 
@@ -108,12 +67,21 @@
           }
       });
 
+      $("#add-action").click(function(){
+          $("#add-leader-contain").toggleClass("hide");
+      });
+
       /* Edit */
       $(document).on("click", ".edit", function(e){
         e.preventDefault();
         var obj = $(this);
         var id = obj.attr("data-id");
 
+          $.post( "/admin/leader/detailLeader/", { id: id })
+            .done(function( data ) {
+              $("#add-leader-contain").removeClass("hide");
+              $("#add-leader-contain").html(data);
+          });
       });
 
       /* ban */
@@ -164,7 +132,7 @@
           }
       });
 
-      $("#add-btn").click(function(e){
+      $(document).on("click", "#add-btn", function(e){
           e.preventDefault();
           var frm = $("#leader-form");
           var btn = $(this);
@@ -181,6 +149,8 @@
                 if( data.status == 0 ) {
                   leader_table.ajax.reload();
                   frm[0].reset();
+                  $("input.form-control").removeAttr("value");
+                  $("select.form-control").val([]);
                 }
                 addGrowlMessage(data.status, data.message);
                 setTimeout(function(){ btn.button('reset'); }, 2000);

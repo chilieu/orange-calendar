@@ -83,8 +83,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="<?=empty($this->uri->segment(2)) ? "active" : "";?>"><a href="<?=base_url("/administrator");?>">Public</a></li>
-        <li class="<?=($this->uri->segment(2)=="reservation") ? "active" : "";?>"><a href="<?=base_url("/administrator/reservation");?>">Reservation</a></li>
+        <li class="<?=($this->uri->segment(1)=="administrator" && empty($this->uri->segment(2)) ) ? "active" : "";?>"><a href="<?=base_url("/administrator");?>">Public</a></li>
+        <li class="<?=($this->uri->segment(1)=="administrator-reservation" && empty($this->uri->segment(2)) ) ? "active" : "";?>"><a href="<?=base_url("/administrator-reservation/");?>">Reservation</a></li>
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
