@@ -29,6 +29,16 @@ class Leader extends Admin_Controller
         $this->render( $this->layout );
     }
 
+    public function newLeader()
+    {
+
+        $this->load->model('Area_model');
+        $areas = array();
+        $areas = $this->Area_model->getAll();
+
+        return $this->load->view('admin/partials/add-leader', array("areas" =>$areas));
+    }
+
     public function detailLeader()
     {
         $id = $this->input->post('id');

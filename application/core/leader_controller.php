@@ -8,5 +8,13 @@ class Leader_Controller extends Global_Controller
             $theme = 'leader';
         }
         parent::__construct($theme);
+
+        //check if admin is logged in
+        $leader = $this->session->userdata('leader');
+        if( $leader['logged_in'] != TRUE ) {
+            $this->load->helper('url');
+            redirect('/leader-login/', 'refresh');
+        }
+
     }
 }

@@ -68,7 +68,14 @@
       });
 
       $("#add-action").click(function(){
+
+          $.post( "/admin/leader/newLeader/")
+            .done(function( data ) {
+              $("#add-leader-contain").removeClass("hide");
+              $("#add-leader-contain").html(data);
+          });
           $("#add-leader-contain").toggleClass("hide");
+
       });
 
       /* Edit */
@@ -82,6 +89,7 @@
               $("#add-leader-contain").removeClass("hide");
               $("#add-leader-contain").html(data);
           });
+
       });
 
       /* ban */

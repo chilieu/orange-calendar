@@ -60,7 +60,7 @@
 
     function initGrowls() {
             $('.growl').fadeIn('slow');
-            setTimeout(function() { $('.growl').fadeOut('slow', function() { $(this).remove(); }); }, 4000)
+            setTimeout(function() { $('.growl').fadeOut('slow', function() { $(this).remove(); }); }, 5000)
             $('.growl-close').click(function() {
                     $('.growl').fadeOut('slow', function() { $(this).remove(); });
             });
@@ -88,7 +88,7 @@
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="/login/adminLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
   </div>

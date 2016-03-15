@@ -8,5 +8,13 @@ class Admin_Controller extends Global_Controller
 			$theme = 'admin';
 		}
 		parent::__construct($theme);
+
+        //check if admin is logged in
+        $administrator = $this->session->userdata('administrator');
+        if( $administrator['logged_in'] != TRUE ) {
+            $this->load->helper('url');
+            redirect('/administrator-login/', 'refresh');
+        }
+
 	}
 }

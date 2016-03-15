@@ -13,8 +13,10 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="<?php echo base_url("public/themes/{$theme}/assets/bootstrap/css/bootstrap.min.css"); ?>">
         <link rel="stylesheet" href="<?php echo base_url("public/themes/{$theme}/assets/font-awesome/css/font-awesome.min.css"); ?>">
-    <link rel="stylesheet" href="<?php echo base_url("public/themes/{$theme}/assets/css/form-elements.css"); ?>">
+        <link rel="stylesheet" href="<?php echo base_url("public/themes/{$theme}/assets/css/form-elements.css"); ?>">
         <link rel="stylesheet" href="<?php echo base_url("public/themes/{$theme}/assets/css/style.css"); ?>">
+
+        <link rel="stylesheet" href="<?php echo base_url('public/css/style.css'); ?>" >
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,7 +62,7 @@
                             </div>
                             </div>
                             <div class="form-bottom">
-                          <form role="form" action="" method="post" class="login-form">
+                          <form role="form" action="/login/leaderLogin/" method="post" class="login-form" id="login-frm">
                             <div class="form-group">
                               <label class="sr-only" for="form-email">Email</label>
                                 <input type="text" name="form_email" placeholder="Email" class="form-username form-control" id="form-username">
@@ -69,7 +71,7 @@
                                 <label class="sr-only" for="form-password">Password</label>
                                 <input type="password" name="form_password" placeholder="Password" class="form-password form-control" id="form-password">
                               </div>
-                              <button type="submit" class="btn">Sign in!</button>
+                              <button type="submit" class="btn" id="login-btn">Sign in!</button>
                           </form>
                         </div>
                         </div>
@@ -90,6 +92,78 @@
         <!--[if lt IE 10]>
             <script src="<?php echo base_url("public/themes/{$theme}/assets/js/placeholder.js"); ?>"></script>
         <![endif]-->
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+                initGrowls();
+        });
+
+        function addGrowlMessage(type, message) {
+                var str = '<div class="growl growl-large growl-';
+                if (type == 0) {
+                        str += 'notice">';
+                } else {
+                        str += 'error">';
+                }
+                str += '<div class="growl-close">x</div><div class="growl-title">';
+                if (type == 0) {
+                        str += 'Success';
+                } else {
+                        str += 'Error';
+                }
+                str += '</div>';
+                str += '<div class="growl-message">' + message + '</div></div>';
+                $('.growl').each(function() { $(this).remove(); });
+                $('body').prepend(str);
+                initGrowls();
+        }
+
+        function initGrowls() {
+                $('.growl').fadeIn('slow');
+                setTimeout(function() { $('.growl').fadeOut('slow', function() { $(this).remove(); }); }, 4000)
+                $('.growl-close').click(function() {
+                        $('.growl').fadeOut('slow', function() { $(this).remove(); });
+                });
+        }
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("#login-btn").click(function(e){
+                    e.preventDefault();
+                    var frm = $("#login-frm");
+                    var btn = $(this);
+                    btn.button('loading');
+
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: frm.attr("action"),
+                        data: frm.serialize(), // serializes the form's elements.
+                        success: function(data)
+                        {
+                            if(data.status == 1) {
+                                addGrowlMessage(data.status, data.message);
+                                setTimeout(function(){
+                                    btn.button('reset');
+                                }, 1000);
+                            } else {
+                                window.location.href = "/leader/";
+                            }
+
+                        },
+                        error: function( jqXHR, textStatus, errorThrown){
+                            addGrowlMessage(1, errorThrown);
+                            setTimeout(function(){ btn.button('reset'); }, 500);
+                        }
+
+                    });
+
+                });
+
+            });
+        </script>
 
     </body>
 
