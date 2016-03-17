@@ -154,6 +154,7 @@
               data: frm.serialize(), // serializes the form's elements.
               success: function(data)
               {
+                console.log(data);
                 if( data.status == 0 ) {
                   leader_table.ajax.reload();
                   frm[0].reset();

@@ -24,12 +24,23 @@
               <input type="email" class="form-control" name="leader[email]" id="email" placeholder="example@email.com" value="<?=$leader['email']?>">
           </div>
 
+          <div class="form-group col-md-6">
+              <label for="exampleInputEmail1">Password</label>
+              <input type="password" class="form-control" name="leader[password]" id="password" placeholder="password">
+              <?php if($leader['id']):?><p class="help-block">Leave blank if you don't want to change it.</p><?php endif;?>
+          </div>
+
+          <div class="form-group col-md-6">
+              <label for="exampleInputEmail1">Confirm Password</label>
+              <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="confirm password">
+          </div>
+
   </div>
 
   <div class="col-md-6">
           <div class="form-group col-md-12">
               <label for="exampleInputEmail1">Areas</label>
-              <select multiple class="form-control" size="6" name="leader[area][]">
+              <select multiple class="form-control" size="10" name="leader[area][]">
                 <?php foreach($areas->result() as $row):?>
                   <option value="<?=$row->area?>" <?=in_array($row->area, $leader['area']) ? "selected" : "";?>><?=$row->title?></option>
                 <?php endforeach;?>

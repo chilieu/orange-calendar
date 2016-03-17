@@ -61,12 +61,15 @@ class Leader extends Admin_Controller
         $leader = $this->input->post('leader');
         $this->load->model('Leader_model');
         $this->load->library('form_validation');
+        $this->load->library('hashids');
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
         $this->form_validation->set_rules('leader[area]', 'Areas', 'trim|required');
+        $this->form_validation->set_rules('password_confirm', 'password confirmation', 'trim');
 
         if(isset($leader['id'])) {
+
 
             $old_leader = $this->Leader_model->getById( $leader['id'] )->result_array();
             $old_leader = $old_leader[0];
@@ -74,9 +77,11 @@ class Leader extends Admin_Controller
             if( $old_leader['email'] !== $leader['email'] ) {
                 $this->form_validation->set_rules('leader[email]', 'Email', 'trim|required|valid_email|is_unique[leader.email]');
             }
+            $this->form_validation->set_rules('leader[password]', 'Password', 'trim|matches[password_confirm]');
 
         } else {
             $this->form_validation->set_rules('leader[email]', 'Email', 'trim|required|valid_email|is_unique[leader.email]');
+            $this->form_validation->set_rules('leader[password]', 'Password', 'trim|required|matches[password_confirm]');
         }
 
         if ($this->form_validation->run() == FALSE)
@@ -90,8 +95,10 @@ class Leader extends Admin_Controller
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
             if(isset($leader['id'])) {
+                $leader['password'] = $this->hashids->encrypt($leader['password']);
                 $res = $this->Leader_model->update($leader['id'], $leader);
             } else {
+                $leader['password'] = $this->hashids->encrypt($leader['password']);
                 $res = $this->Leader_model->insert($leader);
             }
 
