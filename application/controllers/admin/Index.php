@@ -10,11 +10,15 @@ class Index extends Admin_Controller
 
 	public function index()
 	{
+		$this->load->model('Room_model');
 		$this->load->model('Event_model');
 		$events = array();
 		$events = $this->Event_model->getAll();
 
-		$this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('events' => $events), true);
+		$rooms = array();
+		$rooms = $this->Room_model->getAll();
+
+		$this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('events' => $events, 'rooms' => $rooms), true);
 		$this->render( 'layout-calendar' );
 	}
 

@@ -46,8 +46,8 @@
 	}
 
 	#calendar {
-		max-width: 900px;
-		margin: 50px auto;
+		max-width: 100%;
+		margin: 10px auto;
 	}
 
 </style>
@@ -113,10 +113,8 @@
   </div>
 </nav>
 
-    <div class="container">
+    <div class="container-fluid">
     <?=@$_body?>
-		<div id='calendar'></div>
-
     </div><!-- /.container -->
 
 </body>

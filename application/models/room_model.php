@@ -47,4 +47,10 @@ class Room_model extends CI_Model {
     	return $this->db->get();
     }
 
+    function getAll()
+    {
+        $this->db->from( $this->table );
+        $this->db->order_by("room", "desc");
+        return $this->db->get();
+    }
 }
