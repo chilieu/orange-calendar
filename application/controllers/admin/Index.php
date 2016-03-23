@@ -23,4 +23,15 @@ class Index extends Admin_Controller
 	}
 
 
+	public function table()
+	{
+
+		$this->load->model('Event_model');
+		$events = array();
+		$events = $this->Event_model->getAll();
+
+		$this->viewData['_body'] = $this->load->view( $this->APP . '/table', array('events' => $events), true);
+		$this->render( 'layout' );
+	}
+
 }

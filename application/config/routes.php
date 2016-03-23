@@ -54,6 +54,7 @@ $route['default_controller'] = 'home/index';
 //$route['default_controller'] = 'deal';
 
 $route['administrator'] = 'admin/index';
+$route['administrator-list'] = 'admin/index/table/';
 $route['administrator-login'] = 'login/admin';
 $route['administrator-reservation'] = 'admin/leader/reservation/';
 $route['administrator/(:any)'] = 'admin/$1';

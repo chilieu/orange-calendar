@@ -25,8 +25,38 @@ class Leader extends Admin_Controller
     public function reservation()
     {
 
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/reservation', array(), true);
+        $this->load->model('Event_model');
+        $events = array();
+        $events = $this->Event_model->get();
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/reservation', array("events" => $events), true);
         $this->render( $this->layout );
+    }
+
+    public function updateReservation()
+    {
+        $id = $this->input->post('id');
+        $action = $this->input->post('action');
+        if( !$id ) return $this->ajaxResponse(1,"ID empty");
+        if( "approve" == $action ) {
+            $this->load->model('Event_model');
+            $res = $this->Event_model->approve($id);
+
+            if( !$res ) {
+                return $this->ajaxResponse(1,"System error");
+            }
+            return $this->ajaxResponse(0,"This event has been approved");
+
+        } else {
+            $this->load->model('Event_model');
+            $res = $this->Event_model->deny($id);
+
+            if( !$res ) {
+                return $this->ajaxResponse(1,"System error");
+            }
+            return $this->ajaxResponse(0,"This event has been denied");
+        }
+
     }
 
     public function newLeader()
