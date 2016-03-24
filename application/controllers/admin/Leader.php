@@ -33,6 +33,17 @@ class Leader extends Admin_Controller
         $this->render( $this->layout );
     }
 
+    public function request()
+    {
+
+        $this->load->model('Event_model');
+        $events = array();
+        $events = $this->Event_model->getAllUnApproval();
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/reservation', array("events" => $events), true);
+        $this->render( $this->layout );
+    }
+
     public function updateReservation()
     {
         $id = $this->input->post('id');

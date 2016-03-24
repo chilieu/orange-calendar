@@ -51,7 +51,7 @@ class Event_model extends CI_Model {
         $this->db->from( $this->table );
         $this->db->join('room', 'room.id = event.room_id');
         $this->db->join('contact', 'contact.id = event.contact_id');
-        $this->db->where('approval', 1);
+        $this->db->where('approval', 0);
         $this->db->order_by("date", "asc");
         return $this->db->get();
     }

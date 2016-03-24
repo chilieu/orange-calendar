@@ -18,7 +18,13 @@
             <li><a href="<?=base_url("/administrator-list/");?>">Table</a></li>
           </ul>
         </li>
-        <li class="<?=($this->uri->segment(1)=="administrator-reservation" && empty($this->uri->segment(2)) ) ? "active" : "";?>"><a href="<?=base_url("/administrator-reservation/");?>">Reservation</a></li>
+        <li class="dropdown <?=($this->uri->segment(1)=="administrator-reservation" && empty($this->uri->segment(2)) ) ? "active" : "";?>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservation <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<?=base_url("/administrator-reservation/");?>">Reservation</a></li>
+            <li><a href="<?=base_url("/administrator-request/");?>">Request</a></li>
+          </ul>
+        </li>
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

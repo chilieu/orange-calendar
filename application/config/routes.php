@@ -57,6 +57,7 @@ $route['administrator'] = 'admin/index';
 $route['administrator-list'] = 'admin/index/table/';
 $route['administrator-login'] = 'login/admin';
 $route['administrator-reservation'] = 'admin/leader/reservation/';
+$route['administrator-request'] = 'admin/leader/request/';
 $route['administrator/(:any)'] = 'admin/$1';
 
 $route['leader-login'] = 'login/leader';
