@@ -15,7 +15,7 @@ class Leader extends Admin_Controller
         $areas = $this->Area_model->getAll();
 $this->load->library('hashids');
 echo "yrsysy";
-echo  " >>>>>> " . $this->Hashids->encrypt("hoangyen");
+echo  " >>>>>> " . $this->hashids->encrypt("hoangyen");
 exit;
 
         $this->load->model('Leader_model');
