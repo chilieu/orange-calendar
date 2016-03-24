@@ -13,10 +13,6 @@ class Leader extends Admin_Controller
         $this->load->model('Area_model');
         $areas = array();
         $areas = $this->Area_model->getAll();
-$this->load->library('hashids');
-echo "yrsysy";
-echo  " >>>>>> " . $this->hashids->encrypt("hoangyen");
-exit;
 
         $this->load->model('Leader_model');
         $leaders = array();
@@ -128,14 +124,8 @@ exit;
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
             if(isset($leader['id'])) {
-
-                if( isset($leader['password']) && !empty($leader['password']) ) {
-                    return $this->ajaxResponse(1, $leader['password']);
-                    $leader['password'] = $this->Hashids->encrypt($leader['password']);
-                }
                 $res = $this->Leader_model->update($leader['id'], $leader);
             } else {
-                $leader['password'] = $this->Hashids->encrypt($leader['password']);
                 $res = $this->Leader_model->insert($leader);
             }
 
