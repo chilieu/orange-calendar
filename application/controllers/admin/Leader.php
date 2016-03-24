@@ -91,7 +91,6 @@ class Leader extends Admin_Controller
         $leader = $this->input->post('leader');
         $this->load->model('Leader_model');
         $this->load->library('form_validation');
-        $this->load->library('hashids');
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
