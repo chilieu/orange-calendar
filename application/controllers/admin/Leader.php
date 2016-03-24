@@ -91,7 +91,7 @@ class Leader extends Admin_Controller
         $leader = $this->input->post('leader');
         $this->load->model('Leader_model');
         $this->load->library('form_validation');
-        $this->load->library('hashids');
+        $this->load->library('Hashids');
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
@@ -125,10 +125,10 @@ class Leader extends Admin_Controller
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
             if(isset($leader['id'])) {
-                $leader['password'] = $this->hashids->encrypt($leader['password']);
+                $leader['password'] = $this->Hashids->encrypt($leader['password']);
                 $res = $this->Leader_model->update($leader['id'], $leader);
             } else {
-                $leader['password'] = $this->hashids->encrypt($leader['password']);
+                $leader['password'] = $this->Hashids->encrypt($leader['password']);
                 $res = $this->Leader_model->insert($leader);
             }
 
