@@ -13,6 +13,10 @@ class Leader extends Admin_Controller
         $this->load->model('Area_model');
         $areas = array();
         $areas = $this->Area_model->getAll();
+$this->load->library('hashids');
+echo "yrsysy";
+echo  " >>>>>> " . $this->Hashids->encrypt("hoangyen");
+exit;
 
         $this->load->model('Leader_model');
         $leaders = array();
@@ -91,7 +95,7 @@ class Leader extends Admin_Controller
         $leader = $this->input->post('leader');
         $this->load->model('Leader_model');
         $this->load->library('form_validation');
-        $this->load->library('Hashids');
+        $this->load->library('hashids');
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
@@ -99,7 +103,6 @@ class Leader extends Admin_Controller
         $this->form_validation->set_rules('password_confirm', 'password confirmation', 'trim');
 
         if(isset($leader['id'])) {
-
 
             $old_leader = $this->Leader_model->getById( $leader['id'] )->result_array();
             $old_leader = $old_leader[0];
@@ -125,7 +128,11 @@ class Leader extends Admin_Controller
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
             if(isset($leader['id'])) {
-                $leader['password'] = $this->Hashids->encrypt($leader['password']);
+
+                if( isset($leader['password']) && !empty($leader['password']) ) {
+                    return $this->ajaxResponse(1, $leader['password']);
+                    $leader['password'] = $this->Hashids->encrypt($leader['password']);
+                }
                 $res = $this->Leader_model->update($leader['id'], $leader);
             } else {
                 $leader['password'] = $this->Hashids->encrypt($leader['password']);
