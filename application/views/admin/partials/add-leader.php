@@ -4,14 +4,29 @@
 <?php if($leader['id']):?>
   	<input name="leader[id]" value="<?=$leader['id']?>" type="hidden">
 <?php endif;?>
-          <div class="form-group col-md-6">
-              <label for="exampleInputEmail1">First name</label>
-              <input type="text" class="form-control" name="leader[firstname]" id="firstname" placeholder="Leader's First Name" required value="<?=$leader['firstname']?>">
+          <div class="form-group col-md-3">
+              <label for="exampleInputEmail1">Title</label>
+              <select class="form-control" name="leader[title]">
+                <option value=""></option>
+                <option value="Mục Sư">Mục Sư</option>
+                <option value="MS">MS</option>
+                <option value="Pastor">Pastor</option>
+              </select>
           </div>
 
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
+              <label for="exampleInputEmail1">First name</label>
+              <input type="text" class="form-control" name="leader[firstname]" id="firstname" placeholder="First Name" required value="<?=$leader['firstname']?>">
+          </div>
+
+          <div class="form-group col-md-3">
+              <label for="exampleInputEmail1">Middle</label>
+              <input type="text" class="form-control" name="leader[middlename]" id="middlename" placeholder="Middle" required value="<?=$leader['middlename']?>">
+          </div>
+
+          <div class="form-group col-md-3">
               <label for="exampleInputEmail1">Last name</label>
-              <input type="text" class="form-control" name="leader[lastname]" id="lastname" placeholder="Leader's Last Name" required value="<?=$leader['lastname']?>">
+              <input type="text" class="form-control" name="leader[lastname]" id="lastname" placeholder="Last Name" required value="<?=$leader['lastname']?>">
           </div>
 
           <div class="form-group col-md-6">
@@ -42,7 +57,7 @@
               <label for="exampleInputEmail1">Areas</label>
               <select multiple class="form-control" size="10" name="leader[area][]">
                 <?php foreach($areas->result() as $row):?>
-                  <option value="<?=$row->area?>" <?=in_array($row->area, $leader['area']) ? "selected" : "";?>><?=$row->title?></option>
+                  <option value="<?=$row->id?>" <?=in_array($row->id, $leader['area']) ? "selected" : "";?>><?=$row->title?></option>
                 <?php endforeach;?>
               </select>
           </div>

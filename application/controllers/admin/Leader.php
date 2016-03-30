@@ -133,6 +133,8 @@ class Leader extends Admin_Controller
             //success
             if( isset($leader['area']) && is_array($leader['area']) ) $leader['area'] = implode(",", $leader['area']);
 
+            if( empty($leader['password']) ) unset( $leader['password'] );
+
             if(isset($leader['id'])) {
                 $res = $this->Leader_model->update($leader['id'], $leader);
             } else {
@@ -233,7 +235,6 @@ class Leader extends Admin_Controller
                 $r->firstname . " " . $r->lastname,
                 $r->email,
                 $r->phone,
-                $r->area,
                 $action
             );
         }

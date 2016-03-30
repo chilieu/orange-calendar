@@ -20,16 +20,14 @@
                       <thead>
                           <tr>
                               <th width="50px">ID</th>
-                              <th width="180px">Name</th>
+                              <th>Name</th>
                               <th width="200px">Email</th>
                               <th width="200px">Phone</th>
-                              <th>Area</th>
                               <th width="100px"></th>
                           </tr>
                       </thead>
 
-                      <tbody>
-                      </tbody>
+                      <tbody></tbody>
               </table>
 
           </div>
@@ -56,7 +54,7 @@
              {
               "bSortable": false, "aTargets": [1],
               "sClass": "text-center",
-              "aTargets": [ 0, 1, 2, 3, 4, 5]
+              "aTargets": [ 0, 1, 2, 3, 4]
               }
           ],
           "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
