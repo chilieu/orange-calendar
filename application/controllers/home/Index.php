@@ -10,8 +10,17 @@ class Index extends Front_Controller
 
 	public function index()
 	{
-		$this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array(), true);
-		$this->render( $this->layout );
+        $this->load->model('Room_model');
+        $this->load->model('Event_model');
+        $events = array();
+        $events = $this->Event_model->getAll();
+
+        $rooms = array();
+        $rooms = $this->Room_model->getAll();
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('events' => $events, 'rooms' => $rooms), true);
+
+		$this->render( 'layout-calendar' );
 	}
 
 	public function data()

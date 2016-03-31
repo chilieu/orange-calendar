@@ -1,105 +1,92 @@
-<div class="row">
+<script>
 
-	<div class="col-md-10 col-md-offset-1">
+  $(function() { // document ready
 
+    $('#calendar').fullCalendar({
+      schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      theme: true,
+      now: '<?=date("Y-m-d")?>',
+      selectable: true,
+      selectHelper: true,
+      editable: true, // enable draggable events
+      aspectRatio: 2,
+      //scrollTime: '00:00', // undo default 6am scrollTime
+      eventLimit: true, // allow "more" link when too many events
+      header: {
+        left: 'today prev,next',
+        center: 'title',
+        right: 'timelineDay,timelineThreeDays,agendaWeek,month'
+      },
+      defaultView: 'month',
+      views: {
+        timelineThreeDays: {
+          type: 'timeline',
+          duration: { days: 3 }
+        }
+      },
+      // the point if this demo is to demonstrate dayClick...
+      dayClick: function(date, jsEvent, view, resourceObj) {
+        console.log(
+          'dayClick',
+          date.format(),
+          resourceObj ? resourceObj.id : '(no resource)'
+        );
+      },
+      select: function(start, end, jsEvent, view, resource) {
+        var title = prompt('Event Title:');
+        var eventData;
+        if (title) {
+          eventData = {
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+      },
+      resourceLabelText: 'Rooms',
+      resources: [
+      <?php foreach($rooms->result() as $r):?>
+        { id: 'r<?=$r->id?>', title: "<?=stripslashes($r->room)?>" },
+      <?php endforeach;?>
+      ],
+      events: [
+      <?php foreach($events->result() as $e):?>
+      <?php
+        $tip = date("g:i a", $e->time_from) ."-". date("g:i a", $e->time_to) . "-" . $e->event . "<>" . $e->notes;
+      ?>
+        { id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", $e->time_from);?>', end: '<?=date("c", $e->time_to);?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
+      <?php endforeach;?>
+      ],
+      eventMouseover: function(calEvent, jsEvent) {
+          var tooltip = '<div class="tooltipevent" style="text-align:center;padding:3px;width:100px;height:100px;background:#efefef;border:1px solid #333;position:absolute;z-index:10001;">' + calEvent.title + '</div>';
+          $("body").append(tooltip);
+          $(this).mouseover(function(e) {
+              $(this).css('z-index', 10000);
+              $('.tooltipevent').fadeIn('500');
+              $('.tooltipevent').fadeTo('10', 1.9);
+          }).mousemove(function(e) {
+              $('.tooltipevent').css('top', e.pageY + 10);
+              $('.tooltipevent').css('left', e.pageX + 20);
+          });
+      },
+      eventMouseout: function(calEvent, jsEvent) {
+          $(this).css('z-index', 8);
+          $('.tooltipevent').remove();
+      }
 
-<form>
+    });
 
-  <fieldset>
-  	<legend>Contact</legend>
-
-	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">First Name</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="John">
-  	</div>
-
-	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">Last Name</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Doe">
-  	</div>
-
-	<div class="form-group col-md-12">
-	    <small class="text-muted">We'll never share your email and phone number with anyone else.</small>
-  	</div>
-
-  	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">Email address</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="YourEmail@example.com">
-  	</div>
-
-  	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">Phone</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="(xxx)-xxx-xxxx">
-  	</div>
-
-  </fieldset>
-
-  <fieldset>
-
-  	<legend>Reservation</legend>
-
-  	<div class="form-group col-md-6">
-	    <label for="exampleInputEmail1">Event</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Lễ Phục Sinh - Easter Sunday - Sunrise Joint Service	">
-  	</div>
-
-    <div class="form-group col-md-6">
-      <label for="exampleInputEmail1">Room</label>
-      <div class='input-group date' id='room'>
-          <input type='text' class="form-control" placeholder="Room 11" />
-          <span class="input-group-addon">
-              <span class="glyphicon glyphicon glyphicon-picture"></span>
-          </span>
-      </div>
-    </div>
-
-    <div class='col-md-6'>
-        <div class="form-group">
-              <label for="exampleInputEmail1">From</label>
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class='col-md-6'>
-        <div class="form-group">
-              <label for="exampleInputEmail1">End</label>
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
-  	<div class="form-group col-md-12 text-center">
-      <button type="submit" class="btn btn-primary">Submit</button>
-  		<button type="reset" class="btn btn-default">Reset</button>
-  	</div>
-
-  </fieldset>
-
-
-</form>
-
-	</div>
-
-</div>
-
-<script type="text/javascript">
-
-$( document ).ready(function() {
-    $('#datetimepicker1').datetimepicker({
-                sideBySide: true
-            });
-
-    $('#datetimepicker2').datetimepicker({
-                sideBySide: true
-            });
-});
-
+  });
+/*
+2016-03-07T02:00:00
+2016-03-07T07:00:00
+*/
 </script>
+    <div id='calendar'></div>
