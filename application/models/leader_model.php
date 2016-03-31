@@ -12,6 +12,14 @@ class Leader_model extends CI_Model {
         $this->table = 'leader';
     }
 
+    function getByEmail($email)
+    {
+        if( !$email ) return;
+        $this->db->from( $this->table );
+        $this->db->where('email', $email);
+        return $this->db->get();
+    }
+
     function getAll()
     {
         $this->db->from( $this->table );
@@ -30,13 +38,6 @@ class Leader_model extends CI_Model {
         $this->db->where('id', $id);
         $re = $this->db->update($this->table, $data);
         return $id;
-    }
-
-    function getByEmail($area)
-    {
-        $this->db->from($this->table);
-        $this->db->where('email', trim($area) );
-        return $this->db->get();
     }
 
     function getById($id)

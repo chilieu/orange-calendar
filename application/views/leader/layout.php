@@ -44,10 +44,20 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Reservation</a></li>
+
+        <li class="dropdown <?=( ($this->uri->segment(1)=="leader-event-approved" || $this->uri->segment(1)=="leader-event-denied" ) && empty($this->uri->segment(2)) ) ? "active" : "";?>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Requests <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<?=base_url("/leader-event-approved/");?>">Approved</a></li>
+            <li><a href="<?=base_url("/leader-event-denied/");?>">Denied</a></li>
+          </ul>
+        </li>
+
         <li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li>
+        <li class="<?=($this->uri->segment(3)=="leaderSetting") ? "active" : "";?>"><a href="<?=base_url("/leader/index/leaderSetting");?>">Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="/login/leaderLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>

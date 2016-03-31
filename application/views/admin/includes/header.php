@@ -28,7 +28,7 @@
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/login/adminLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        <li><a href="/login/adminLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>

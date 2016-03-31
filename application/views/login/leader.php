@@ -64,12 +64,12 @@
                             <div class="form-bottom">
                           <form role="form" action="/login/leaderLogin/" method="post" class="login-form" id="login-frm">
                             <div class="form-group">
-                              <label class="sr-only" for="form-email">Email</label>
-                                <input type="text" name="form_email" placeholder="Email" class="form-username form-control" id="form-username">
+                              <label class="sr-only" for="email">Email</label>
+                                <input type="text" name="login[email]" placeholder="Email" class="form-username form-control" id="form-username">
                               </div>
                               <div class="form-group">
-                                <label class="sr-only" for="form-password">Password</label>
-                                <input type="password" name="form_password" placeholder="Password" class="form-password form-control" id="form-password">
+                                <label class="sr-only" for="password">Password</label>
+                                <input type="password" name="login[password]" placeholder="Password" class="form-password form-control" id="form-password">
                               </div>
                               <button type="submit" class="btn" id="login-btn">Sign in!</button>
                           </form>

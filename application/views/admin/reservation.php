@@ -25,7 +25,7 @@
                         <th width="100px">From</th>
                         <th width="100px">To</th>
                         <th width="200px">Contact</th>
-                        <th width="75px">Action</th>
+                        <th width="100px">Action</th>
                     </tr>
                 </thead>
 
@@ -40,8 +40,9 @@
                         <td><?=date("h:i A", $row->time_to)?></td>
                         <td><?=$row->name?></td>
                         <td>
-                        	<a class="text-success pull-left approve" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>
-                        	<a class="text-danger pull-right deny" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>
+                            <a class="text-default edit" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        	<a class="text-success approve" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>
+                        	<a class="text-danger deny" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 <?php endforeach;?>
@@ -61,6 +62,17 @@ $(document).ready(function() {
         pageLength: 15
     });
 
+    $(".edit").click(function(e){
+        e.preventDefault();
+
+        var obj = $(this);
+        var id = obj.attr("data-id");
+        var result = confirm("Under Contruction");
+        if (result) {
+
+        }
+
+    });
 
     $(".approve").click(function(e){
     	e.preventDefault();
