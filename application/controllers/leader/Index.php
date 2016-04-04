@@ -24,4 +24,20 @@ class Index extends Leader_Controller
 
     }
 
+    public function profile()
+    {
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/profile', array(), true);
+        $this->render( $this->layout );
+
+    }
+
+
+    public function editProfile()
+    {
+
+
+    }
+
+
 }

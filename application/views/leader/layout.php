@@ -54,7 +54,7 @@
         </li>
 
         <li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li>
-        <li class="<?=($this->uri->segment(3)=="leaderSetting") ? "active" : "";?>"><a href="<?=base_url("/leader/index/leaderSetting");?>">Profile</a></li>
+        <li class="<?=($this->uri->segment(3)=="leaderSetting") ? "active" : "";?>"><a href="<?=base_url("/leader/index/profile");?>">Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/login/leaderLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
