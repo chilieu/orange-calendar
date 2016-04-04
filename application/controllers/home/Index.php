@@ -16,7 +16,7 @@ class Index extends Front_Controller
         $events = $this->Event_model->getAll();
 
         $rooms = array();
-        $rooms = $this->Room_model->getAll();
+        $rooms = $this->Room_model->getAllOnSite();
 
         $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('events' => $events, 'rooms' => $rooms), true);
 

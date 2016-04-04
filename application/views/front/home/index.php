@@ -22,7 +22,7 @@
         center: 'title',
         right: 'timelineDay,timelineThreeDays,agendaWeek,month'
       },
-      defaultView: 'month',
+      defaultView: 'timelineDay',
       views: {
         timelineThreeDays: {
           type: 'timeline',
