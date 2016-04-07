@@ -10,8 +10,9 @@ class Index extends Leader_Controller
 
     public function index()
     {
-
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/index', array(), true);
+        $this->load->model('Room_model');
+        $rooms = $this->Room_model->getAll();
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('rooms' => $rooms), true);
         $this->render( $this->layout );
 
     }

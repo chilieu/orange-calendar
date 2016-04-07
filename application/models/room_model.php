@@ -50,7 +50,8 @@ class Room_model extends CI_Model {
     function getAll()
     {
         $this->db->from( $this->table );
-        $this->db->order_by("room", "desc");
+        $this->db->order_by("onsite", "asc");
+        $this->db->order_by("room", "asc");
         return $this->db->get();
     }
 

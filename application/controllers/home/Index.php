@@ -13,10 +13,10 @@ class Index extends Front_Controller
         $this->load->model('Room_model');
         $this->load->model('Event_model');
         $events = array();
-        $events = $this->Event_model->getAll();
+        //$events = $this->Event_model->getAll();
 
         $rooms = array();
-        $rooms = $this->Room_model->getAllOnSite();
+        //$rooms = $this->Room_model->getAllOnSite();
 
         $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('events' => $events, 'rooms' => $rooms), true);
 
