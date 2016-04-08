@@ -100,18 +100,41 @@ function formatPhoneNumber($phoneNumber) {
 
 function weekdayOnEveryWeek($weekday) {
 	$year = date("Y");
-
-	//$first = date('Y-m-d', strtotime("first {$weekday} {$year}-1"));
-	$first = strtotime("first {$weekday} {$year}-1");
+	$current = strtotime("first {$weekday} of January {$year}");//first $weekday of year
+	$last = strtotime("last {$weekday} of December {$year}");
 	$week = (60 * 60 * 24 * 7);
 
-	return $first;
+	$list = array();
+	while( $current <= $last ) {
+		$list[] = $current;
+		$current += $week;
+	}
+	return $list;
 }
 
-function weekdayOnEvery2Weeks(){
+function weekdayOnEvery2Weeks($weekday){
 	$year = date("Y");
+	$current = strtotime("first {$weekday} of January {$year}");//first $weekday of year
+	$last = strtotime("last {$weekday} of December {$year}");
+	$week = (60 * 60 * 24 * 14);
+
+	$list = array();
+	while( $current <= $last ) {
+		$list[] = $current;
+		$current += $week;
+	}
+	return $list;
 }
 
-function dayOnEveryMonth(){
+function dayOnEveryMonth($weekday){
 	$year = date("Y");
+
+	$list = array();
+	for($i = 1; $i<=12; $i++) {
+		$month = str_pad($i, 2, "0", STR_PAD_LEFT);
+		$tc = strtotime("{$weekday} {$year}-{$month}");
+		$list[] = $tc;
+	}
+
+	return $list;
 }

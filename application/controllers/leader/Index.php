@@ -94,9 +94,31 @@ class Index extends Leader_Controller
         $schedule = $this->input->post('schedule');
         $reserve = $this->input->post('reserve');
 
-        $test = Util\weekdayOnEveryWeek("monday");
+        switch( $schedule ) {
+            case 1://one time only
+                break;
 
-        return $this->ajaxResponse(0, "Success" . print_r($test, true));
+            case 2://every week
+                $weekday = $reserve['everyweek-on'];
+                $days = Util\weekdayOnEveryWeek($weekday);
+                break;
+
+            case 3://once every 2 weeks
+                $weekday = $reserve['every2weeks-on'];
+                $days = Util\weekdayOnEvery2Weeks($weekday);
+                break;
+
+            case 4://once month
+                $weekday = $reserve['everymonth-on'];
+                $days = Util\dayOnEveryMonth($weekday);
+                break;
+
+            default:
+                return $this->ajaxResponse(1, "Please select time range");
+                break;
+        }
+
+        return $this->ajaxResponse(0, "Success" . print_r($days, true));
     }
 
 

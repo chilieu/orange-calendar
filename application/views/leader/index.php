@@ -48,7 +48,7 @@ $days = array(
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-start]" type='text' class="form-control" id='onetime-starttime' placeholder="Time Start" />
+                      <input name="reserve[onetime-start]" type='text' class="form-control" id='onetime-starttime' placeholder="Date/time Start" />
                       <script type="text/javascript">
                           $(function () {
                               $('#onetime-starttime').datetimepicker();
@@ -59,7 +59,7 @@ $days = array(
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-end]" type='text' class="form-control" id='onetime-endtime' placeholder="Time End" />
+                      <input name="reserve[onetime-end]" type='text' class="form-control" id='onetime-endtime' placeholder="Date/time End" />
                       <script type="text/javascript">
                           $(function () {
                               $('#onetime-endtime').datetimepicker();
@@ -95,7 +95,7 @@ $days = array(
             <div class="form-group">
               <div class="radio">
                 <label>
-                  <input type="radio" name="schedule" id="schedule3" value="option1">
+                  <input type="radio" name="schedule" id="schedule3" value="3">
                   Once every 2 weeks
                   <select name="reserve[every2weeks-on]" id="datetime-every2weeks" class="datetime hide">
                     <?php foreach($days as $k => $d):?>
@@ -111,12 +111,33 @@ $days = array(
             <div class="form-group">
               <div class="radio">
                 <label>
-                  <input type="radio" name="schedule" id="schedule4" value="option1">
+                  <input type="radio" name="schedule" id="schedule4" value="4">
                   Once every month
                   <select name="reserve[everymonth-on]" id="datetime-oncemonth" class="datetime hide">
-                    <?php foreach($days as $k => $d):?>
-                    <option value="<?=$d?>">on first <?=$d?></option>
-                  <?php endforeach;?>
+                    <optgroup label="First Week">
+                      <?php foreach($days as $k => $d):?>
+                        <option value="first <?=$d?>"><?=$d?></option>
+                      <?php endforeach;?>
+                    </optgroup>
+
+                    <optgroup label="Second Week">
+                      <?php foreach($days as $k => $d):?>
+                        <option value="second <?=$d?>"><?=$d?></option>
+                      <?php endforeach;?>
+                    </optgroup>
+
+                    <optgroup label="Third Week">
+                      <?php foreach($days as $k => $d):?>
+                        <option value="third <?=$d?>"><?=$d?></option>
+                      <?php endforeach;?>
+                    </optgroup>
+
+                    <optgroup label="Fourth Week">
+                      <?php foreach($days as $k => $d):?>
+                        <option value="fourth <?=$d?>"><?=$d?></option>
+                      <?php endforeach;?>
+                    </optgroup>
+
                   </select>
                 </label>
               </div>
@@ -211,10 +232,8 @@ $( document ).ready(function() {
                 addGrowlMessage(data.status, data.message);
                 if( data.status == 0 ) {
                     /*sending to thank you page*/
-
-                } else {
-                    setTimeout(function(){ btn.button('reset'); }, 2000);
                 }
+                  setTimeout(function(){ btn.button('reset'); }, 2000);
             },
             error: function( jqXHR, textStatus, errorThrown){
               addGrowlMessage(1, textStatus + ": " + errorThrown);
