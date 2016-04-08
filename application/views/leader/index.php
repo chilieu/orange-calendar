@@ -13,7 +13,7 @@ $days = array(
 
     <div class="col-md-10 col-md-offset-1">
 
-      <form action="" name="reservation-frm" method="POST">
+      <form action="/leader/index/postReserve/" name="reservation-frm" id="reservation-frm" method="POST">
         <fieldset>
 
           <legend>Reservation</legend>
@@ -163,8 +163,8 @@ $days = array(
 
 
           <div class="form-group col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-default">Reset</button>
+            <button type="submit" class="btn btn-primary" data-loading-text="Processing ..."  id="btn-submit">Submit</button>
+            <button type="reset" class="btn btn-default">Reset</button>
           </div>
 
         </fieldset>
@@ -191,6 +191,40 @@ $( document ).ready(function() {
         } else {
           $("#time-start-end-wrapper").removeClass("hide");
         }
+
+    });
+
+
+    $("#btn-submit").click(function(e){
+      e.preventDefault();
+
+        var frm = $("#reservation-frm");
+        var btn = $(this);
+
+        //set to loading before send to server
+        btn.button('loading');
+        //alert( frm.attr("action") );
+        $.ajax({
+            type: "POST",
+            url: frm.attr("action"),
+            data: frm.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                console.log(data);
+                addGrowlMessage(data.status, data.msg);
+                if( data.status == 0 ) {
+                    /*sending to thank you page*/
+
+                } else {
+                    setTimeout(function(){ btn.button('reset'); }, 2000);
+                }
+            },
+            error: function( jqXHR, textStatus, errorThrown){
+              addGrowlMessage(1, textStatus + ": " + errorThrown);
+              setTimeout(function(){ btn.button('reset'); }, 500);
+            }
+
+        });
 
     });
 
