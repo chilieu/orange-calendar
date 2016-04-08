@@ -88,5 +88,10 @@ class Index extends Leader_Controller
 
     }
 
+    public function postReserve() {
+        $reserve = $this->input->post('reserve');
+
+    }
+
 
 }
