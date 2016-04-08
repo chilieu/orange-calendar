@@ -44,13 +44,11 @@ $days = array(
                   <input type="radio" name="schedule" id="schedule1" value="1">
                   One time only
 
-                  <div id="datetime-onetime" class="datetime hide">
-                    <div class='col-md-6'>
-                      <label for="onetime-starttime">Time Start</label>
+                  <div id="datetime-onetime" class="row datetime hide">
 
-                      <div class='col-md-12'>
-                          <input name="reserve[onetime-start]" type='text' class="form-control" id='onetime-starttime' placeholder="From ..." />
-                      </div>
+                    <div class='col-md-6 col-sm-6 col-xs-6'>
+
+                      <input name="reserve[onetime-start]" type='text' class="form-control" id='onetime-starttime' placeholder="Time Start" />
                       <script type="text/javascript">
                           $(function () {
                               $('#onetime-starttime').datetimepicker();
@@ -59,12 +57,9 @@ $days = array(
 
                     </div>
 
-                    <div class='col-md-6'>
-                      <label for="onetime-endtime">Time End</label>
+                    <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <div class='col-md-12'>
-                          <input name="reserve[onetime-end]" type='text' class="form-control" id='onetime-endtime' placeholder="To ..." />
-                      </div>
+                      <input name="reserve[onetime-end]" type='text' class="form-control" id='onetime-endtime' placeholder="Time End" />
                       <script type="text/javascript">
                           $(function () {
                               $('#onetime-endtime').datetimepicker();
@@ -206,12 +201,14 @@ $( document ).ready(function() {
         //alert( frm.attr("action") );
         $.ajax({
             type: "POST",
+            dataType: "json",
             url: frm.attr("action"),
             data: frm.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                console.log(data);
-                addGrowlMessage(data.status, data.msg);
+                console.log(data.status);
+                console.log(data.message);
+                addGrowlMessage(data.status, data.message);
                 if( data.status == 0 ) {
                     /*sending to thank you page*/
 

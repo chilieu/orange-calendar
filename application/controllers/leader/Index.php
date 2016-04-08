@@ -89,8 +89,11 @@ class Index extends Leader_Controller
     }
 
     public function postReserve() {
+
+        $schedule = $this->input->post('schedule');
         $reserve = $this->input->post('reserve');
-        return $this->ajaxResponse(0,"Success");
+
+        return $this->ajaxResponse(0, "Success" . print_r($schedule, true));
     }
 
 
