@@ -97,3 +97,21 @@ function formatPhoneNumber($phoneNumber) {
 		return $phoneNumber;
 	}
 }
+
+function weekdayOnEveryWeek($weekday) {
+	$year = date("Y");
+
+	//$first = date('Y-m-d', strtotime("first {$weekday} {$year}-1"));
+	$first = strtotime("first {$weekday} {$year}-1");
+	$week = (60 * 60 * 24 * 7);
+
+	return $first;
+}
+
+function weekdayOnEvery2Weeks(){
+	$year = date("Y");
+}
+
+function dayOnEveryMonth(){
+	$year = date("Y");
+}

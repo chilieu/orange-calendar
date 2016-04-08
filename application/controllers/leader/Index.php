@@ -10,6 +10,7 @@ class Index extends Leader_Controller
 
     public function index()
     {
+
         $this->load->model('Room_model');
         $rooms = $this->Room_model->getAll();
         $this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('rooms' => $rooms), true);
@@ -93,7 +94,9 @@ class Index extends Leader_Controller
         $schedule = $this->input->post('schedule');
         $reserve = $this->input->post('reserve');
 
-        return $this->ajaxResponse(0, "Success" . print_r($schedule, true));
+        $test = Util\weekdayOnEveryWeek("monday");
+
+        return $this->ajaxResponse(0, "Success" . print_r($test, true));
     }
 
 
