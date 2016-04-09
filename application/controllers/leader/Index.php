@@ -91,11 +91,22 @@ class Index extends Leader_Controller
 
     public function postReserve() {
 
+        $session_leader = $this->session->userdata('leader');
+        $leader_id = $session_leader['leader_id'];
+
         $schedule = $this->input->post('schedule');
         $reserve = $this->input->post('reserve');
 
         switch( $schedule ) {
             case 1://one time only
+                $start = $reserve['onetime-start'];
+                $end = $reserve['onetime-end'];
+                $start = Util\convert2Timestamp( $reserve['onetime-start'] );
+                $end = Util\convert2Timestamp( $reserve['onetime-end'] );
+                $days = array(
+                            array("start" => $start, 'end' => $end)
+                    );
+
                 break;
 
             case 2://every week
@@ -117,6 +128,20 @@ class Index extends Leader_Controller
                 return $this->ajaxResponse(1, "Please select time range");
                 break;
         }
+
+        $event = array();
+        $event['event']     = $reserve['event'];
+        $event['notes']     = $reserve['notes'];
+        $event['leader_id'] = $leader_id;
+
+        $this->load->model('Event_model');
+        $event_id = $this->Event_model->insert($event);
+
+        $event_date = array();
+        $event_date['event_id']     = $event_id;
+        $event_date['room_id']      = $reserve['room_id'];
+        $event_date['date_from']    = $date_from;
+        $event_date['date_to']      = $date_to;
 
         return $this->ajaxResponse(0, "Success" . print_r($days, true));
     }

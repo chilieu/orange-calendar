@@ -98,6 +98,11 @@ function formatPhoneNumber($phoneNumber) {
 	}
 }
 
+function convert2Timestamp( $datetime ) {
+	//04/08/2016 9:32 PM
+	return strtotime($datetime);
+}
+
 function weekdayOnEveryWeek($weekday) {
 	$year = date("Y");
 	$current = strtotime("first {$weekday} of January {$year}");//first $weekday of year
