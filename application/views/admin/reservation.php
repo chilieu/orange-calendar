@@ -1,3 +1,4 @@
+<?php /*
 <style type="text/css">
 .table {
     table-layout:fixed;
@@ -114,3 +115,4 @@ $(document).ready(function() {
 
 } );
 </script>
+*/?>

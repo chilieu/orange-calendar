@@ -1,3 +1,4 @@
+<?php /*
 <script>
 
 	$(function() { // document ready
@@ -84,9 +85,7 @@
 		});
 
 	});
-/*
-2016-03-07T02:00:00
-2016-03-07T07:00:00
-*/
+
 </script>
 		<div id='calendar'></div>
+*/?>
