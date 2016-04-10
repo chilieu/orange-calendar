@@ -25,6 +25,17 @@ class Area_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    function delete($id)
+    {
+        return $this->db->delete($this->table , array('id' => $id));
+    }
+
+    function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update($this->table, $data);
+    }
+
     function getByArea($area)
     {
         $this->db->from($this->table);

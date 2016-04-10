@@ -26,6 +26,8 @@
           </ul>
         </li>
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>
+        <li class="<?=($this->uri->segment(2)=="room") ? "active" : "";?>"><a href="<?=base_url("/administrator/room");?>">Room</a></li>
+        <li class="<?=($this->uri->segment(2)=="area") ? "active" : "";?>"><a href="<?=base_url("/administrator/area");?>">Title/Area</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/login/adminLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

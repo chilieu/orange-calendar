@@ -33,6 +33,17 @@ class Room_model extends CI_Model {
 		return $this->db->insert_id();
     }
 
+    function delete($id)
+    {
+        return $this->db->delete($this->table , array('id' => $id));
+    }
+
+    function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $this->db->update($this->table, $data);
+    }
+
     function getByRoom($name)
     {
     	$this->db->from($this->table);
@@ -50,7 +61,8 @@ class Room_model extends CI_Model {
     function getAll()
     {
         $this->db->from( $this->table );
-        $this->db->order_by("onsite", "asc");
+        $this->db->order_by("order", "asc");
+        //$this->db->order_by("onsite", "asc");
         $this->db->order_by("room", "asc");
         return $this->db->get();
     }
