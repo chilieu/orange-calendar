@@ -155,9 +155,9 @@
                 console.log(data);
                 if( data.status == 0 ) {
                   leader_table.ajax.reload();
-                  frm[0].reset();
-                  $("input.form-control").removeAttr("value");
-                  $("select.form-control").val([]);
+                  //frm[0].reset();
+                  //$("input.form-control").removeAttr("value");
+                  //$("select.form-control").val([]);
                 }
                 addGrowlMessage(data.status, data.message);
                 setTimeout(function(){ btn.button('reset'); }, 2000);

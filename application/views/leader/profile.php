@@ -13,12 +13,7 @@
 <?php endif;?>
           <div class="form-group col-md-3">
               <label for="exampleInputEmail1">Title</label>
-              <select class="form-control" name="leader[title]">
-                <option value=""></option>
-                <option value="Mục Sư">Mục Sư</option>
-                <option value="MS">MS</option>
-                <option value="Pastor">Pastor</option>
-              </select>
+              <p class="form-control-static"><?=$leader['title']?></p>
           </div>
 
           <div class="form-group col-md-3">
@@ -62,7 +57,7 @@
   <div class="col-md-6">
           <div class="form-group col-md-12">
               <label for="exampleInputEmail1">Areas</label>
-              <select multiple class="form-control" size="10" name="leader[area][]">
+              <select multiple class="form-control" size="10" name="leader[area][]" disabled="disabled">
                 <?php foreach($areas->result() as $row):?>
                   <option value="<?=$row->id?>" <?=in_array($row->id, $leader['area']) ? "selected" : "";?>><?=$row->title?></option>
                 <?php endforeach;?>

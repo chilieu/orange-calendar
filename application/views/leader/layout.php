@@ -78,7 +78,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Reservation</a></li>
-        <li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li>
+        <!--li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li-->
         <li class="<?=($this->uri->segment(3)=="profile") ? "active" : "";?>"><a href="<?=base_url("/leader/index/profile");?>">Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

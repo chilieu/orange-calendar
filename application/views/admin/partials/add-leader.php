@@ -1,3 +1,11 @@
+<?php
+  $title = array(
+      "Mục Sư Quản Nhiệm",
+      "MSNC",
+      "Pastor",
+      "Leader"
+    );
+?>
 <form action="/admin/leader/addLeader/" id="leader-form" class="form1" name="leader_form" method="post">
 
   <div class="col-md-6">
@@ -8,9 +16,9 @@
               <label for="exampleInputEmail1">Title</label>
               <select class="form-control" name="leader[title]">
                 <option value=""></option>
-                <option value="Mục Sư">Mục Sư</option>
-                <option value="MS">MS</option>
-                <option value="Pastor">Pastor</option>
+                <?php foreach($title as $k => $t):?>
+                  <option value="<?=$t?>" <?=($t == $leader['title']) ? "selected" : ""; ?>><?=$t?></option>
+                <?php endforeach;?>
               </select>
           </div>
 
@@ -65,8 +73,13 @@
 
   <div class="col-md-12">
           <div class="form-group col-md-12 text-center">
-            <button type="submit" class="btn btn-primary" data-loading-text="Adding ..." id="add-btn">Add</button>
-            <button type="reset" class="btn btn-default">Reset</button>
+            <?php if($leader['id']):?>
+              <button type="submit" class="btn btn-primary" data-loading-text="Adding ..." id="add-btn">Update</button>
+              <button type="reset" class="btn btn-default">Close</button>
+            <?php else:?>
+              <button type="submit" class="btn btn-primary" data-loading-text="Adding ..." id="add-btn">Add</button>
+              <button type="reset" class="btn btn-default">Reset</button>
+            <?php endif;?>
           </div>
   </div>
 

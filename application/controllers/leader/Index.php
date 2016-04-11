@@ -54,7 +54,7 @@ class Index extends Leader_Controller
 
         $this->form_validation->set_rules('leader[firstname]', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('leader[lastname]', 'Lastname', 'trim|required');
-        $this->form_validation->set_rules('leader[area]', 'Areas', 'trim|required');
+        //$this->form_validation->set_rules('leader[area]', 'Areas', 'trim|required');
         $this->form_validation->set_rules('password_confirm', 'password confirmation', 'trim');
 
         $old_leader = $this->Leader_model->getById( $leader['id'] )->result_array();

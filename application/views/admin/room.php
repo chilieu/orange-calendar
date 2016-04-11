@@ -15,7 +15,7 @@
                           <tr>
                               <th width="50px" class="hide">ID</th>
                               <th>Room</th>
-                              <th width="100px">OnSite</th>
+                              <th width="120px">OnSite</th>
                               <th width="10px">Sorting</th>
                               <th width="75px"></th>
                               <th width="75px"></th>

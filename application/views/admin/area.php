@@ -14,7 +14,7 @@
                       <thead>
                           <tr>
                               <th width="50px" class="hide">ID</th>
-                              <th>Title</th>
+                              <th>Group/Area</th>
                               <th width="75px"></th>
                               <th width="75px"></th>
 
