@@ -55,6 +55,8 @@ class Room extends Admin_Controller
     	$data['room'] = $this->input->post('room');
     	$data['onsite'] = $this->input->post('onsite');
 
+        if( empty($data['room']) ) return $this->ajaxResponse(1, "Please enter room name");
+
         $id = $this->Room_model->update($id, $data);
 		return $this->ajaxResponse(0,"Room has been updated");
 

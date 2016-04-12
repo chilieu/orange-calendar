@@ -14,6 +14,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="<?php echo base_url('public/css/style.css'); ?>" >
     <link rel="stylesheet" href="<?php echo base_url('public/css/bootstrap-datetimepicker.css'); ?>" >
+    <link rel="stylesheet" href="<?php echo base_url('public/css/bootstrap-datetimepicker-2.css'); ?>" >
 
      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
@@ -28,6 +29,7 @@
 
     <script src="<?php echo base_url('public/js/moment-with-locales.js'); ?>"></script>
     <script src="<?php echo base_url('public/js/bootstrap-datetimepicker.js'); ?>"></script>
+    <script src="<?php echo base_url('public/js/bootstrap-datetimepicker-2.js'); ?>"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {

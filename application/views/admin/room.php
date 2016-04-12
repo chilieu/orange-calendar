@@ -130,7 +130,9 @@
           .done(function( data ) {
             var data = $.parseJSON(data);
             addGrowlMessage(data.status, data.message);
-            setTimeout(function(){ window.location.reload(); }, 2000);
+            if( 0 == data.status) {
+              setTimeout(function(){ window.location.reload(); }, 2000);
+            }
         });
 
     });

@@ -16,7 +16,7 @@ $days = array(
       <form action="/leader/index/postReserve/" name="reservation-frm" id="reservation-frm" method="POST">
         <fieldset>
 
-          <legend>Reservation</legend>
+          <!--legend>Reservation</legend-->
 
           <div class="form-group col-md-12">
               <label for="exampleInputEmail1">Event</label>
@@ -40,7 +40,7 @@ $days = array(
           <div class='col-md-12'>
             <div class="form-group">
               <div class="radio">
-                <label>
+                <label class='col-md-12'>
                   <input type="radio" name="schedule" id="schedule1" value="1">
                   One time only
 
@@ -48,23 +48,13 @@ $days = array(
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-start]" type='text' class="form-control" id='onetime-starttime' placeholder="Date/time Start" />
-                      <script type="text/javascript">
-                          $(function () {
-                              $('#onetime-starttime').datetimepicker();
-                          });
-                      </script>
+                      <input name="reserve[onetime-start]" type='text' class="form-control form_datetime1" id='onetime-starttime' placeholder="Date/time Start" />
 
                     </div>
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-end]" type='text' class="form-control" id='onetime-endtime' placeholder="Date/time End" />
-                      <script type="text/javascript">
-                          $(function () {
-                              $('#onetime-endtime').datetimepicker();
-                          });
-                      </script>
+                      <input name="reserve[onetime-end]" type='text' class="form-control form_datetime1" id='onetime-endtime' placeholder="Date/time End" />
 
                     </div>
                   </div>
@@ -78,7 +68,7 @@ $days = array(
           <div class='col-md-12'>
             <div class="form-group">
               <div class="radio">
-                <label>
+                <label class='col-md-12'>
                   <input type="radio" name="schedule" id="schedule2" value="2">
                   Every week
                   <select name="reserve[everyweek-on]" id="datetime-everyweek" class="datetime hide">
@@ -94,7 +84,7 @@ $days = array(
           <div class='col-md-12'>
             <div class="form-group">
               <div class="radio">
-                <label>
+                <label class='col-md-12'>
                   <input type="radio" name="schedule" id="schedule3" value="3">
                   Once every 2 weeks
                   <select name="reserve[every2weeks-on]" id="datetime-every2weeks" class="datetime hide">
@@ -110,7 +100,7 @@ $days = array(
           <div class='col-md-12'>
             <div class="form-group">
               <div class="radio">
-                <label>
+                <label class='col-md-12'>
                   <input type="radio" name="schedule" id="schedule4" value="4">
                   Once every month
                   <select name="reserve[everymonth-on]" id="datetime-oncemonth" class="datetime hide">
@@ -143,7 +133,7 @@ $days = array(
               </div>
             </div>
           </div>
-
+          <div class='col-md-12'>&nbsp</div>
           <div class="row hide" id="time-start-end-wrapper">
           <div class='col-md-6 col-sm-6'>
               <div class="form-group">
@@ -153,7 +143,7 @@ $days = array(
                   </div>
                   <script type="text/javascript">
                       $(function () {
-                          $('#input-time-start').datetimepicker({format: 'LT'});
+                          $('#input-time-start').datetimepicker1({format: 'LT'});
                       });
                   </script>
                 </div>
@@ -168,7 +158,7 @@ $days = array(
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#input-time-end').datetimepicker({format: 'LT'});
+                        $('#input-time-end').datetimepicker1({format: 'LT'});
                     });
                 </script>
               </div>
@@ -189,6 +179,26 @@ $days = array(
     </div>
 
 </div>
+
+  <script type="text/javascript">
+
+    $(".form_datetime1").datetimepicker({
+        format: 'MM dd, yyyy - HH:ii P',
+        minuteStep: 15,
+        forceParse: true,
+        autoclose: true,
+        showMeridian: true
+    });
+
+    $(".form_datetime7").datetimepicker({
+      format: "HH:ii P",
+      autoclose: true,
+      forceParse: true,
+      todayBtn: true,
+      showMeridian: true
+    });
+
+  </script>
 
 <script type="text/javascript">
 

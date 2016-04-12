@@ -2,7 +2,7 @@
     <div class="row">
 
         <fieldset>
-            <legend>Edit your profile</legend>
+            <legend>Edit profile</legend>
 
 
 <form action="/leader/index/editProfile/" id="leader-form" class="form1" name="leader_form" method="post">

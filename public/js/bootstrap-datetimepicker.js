@@ -56,7 +56,7 @@
         throw new Error('bootstrap-datetimepicker requires Moment.js to be loaded first');
     }
 
-    var dateTimePicker = function (element, options) {
+    var dateTimePicker1 = function (element, options) {
         var picker = {},
             date = moment().startOf('d'),
             viewDate = date.clone(),
@@ -2300,18 +2300,18 @@
      *
      ********************************************************************************/
 
-    $.fn.datetimepicker = function (options) {
+    $.fn.datetimepicker1 = function (options) {
         return this.each(function () {
             var $this = $(this);
             if (!$this.data('DateTimePicker')) {
                 // create a private copy of the defaults object
-                options = $.extend(true, {}, $.fn.datetimepicker.defaults, options);
-                $this.data('DateTimePicker', dateTimePicker($this, options));
+                options = $.extend(true, {}, $.fn.datetimepicker1.defaults, options);
+                $this.data('DateTimePicker', dateTimePicker1($this, options));
             }
         });
     };
 
-    $.fn.datetimepicker.defaults = {
+    $.fn.datetimepicker1.defaults = {
         format: false,
         dayViewHeaderFormat: 'MMMM YYYY',
         extraFormats: false,

@@ -52,6 +52,8 @@ class Area extends Admin_Controller
 
     	$data['title'] = $this->input->post('title');
 
+        if( empty($data['title']) ) return $this->ajaxResponse(1, "Please enter title");
+
         $id = $this->Area_model->update($id, $data);
 		return $this->ajaxResponse(0,"Title has been updated");
 
