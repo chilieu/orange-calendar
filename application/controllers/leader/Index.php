@@ -12,8 +12,9 @@ class Index extends Leader_Controller
     {
 
         $this->load->model('Room_model');
-        $rooms = $this->Room_model->getAll();
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('rooms' => $rooms), true);
+        $rooms = $this->Room_model->getAllOnSite();
+        $offsite_rooms = $this->Room_model->getAllOffSite();
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/index', array('rooms' => $rooms, 'offsite_rooms' => $offsite_rooms), true);
         $this->render( $this->layout );
 
     }
@@ -94,9 +95,18 @@ class Index extends Leader_Controller
 
         $session_leader = $this->session->userdata('leader');
         $leader_id = $session_leader['leader_id'];
+        $this->load->library('form_validation');
 
         $schedule = $this->input->post('schedule');
         $reserve = $this->input->post('reserve');
+        $this->form_validation->set_rules('reserve[event]', 'Event', 'trim|min_length[8]|required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $error = validation_errors();
+            return $this->ajaxResponse(1, $error);
+        }
+
+
 
         switch( $schedule ) {
             case 1://one time only
@@ -107,7 +117,6 @@ class Index extends Leader_Controller
                 $days = array(
                             array("start" => $start, 'end' => $end)
                     );
-
                 break;
 
             case 2://every week
@@ -135,16 +144,36 @@ class Index extends Leader_Controller
         $event['notes']     = $reserve['notes'];
         $event['leader_id'] = $leader_id;
 
+
         $this->load->model('Event_model');
         $event_id = $this->Event_model->insert($event);
 
-        $event_date = array();
-        $event_date['event_id']     = $event_id;
-        $event_date['room_id']      = $reserve['room_id'];
-        $event_date['date_from']    = $date_from;
-        $event_date['date_to']      = $date_to;
+        $this->load->model('Event_date_model');
+        $reserve["time-start"] = !empty( $reserve["time-start"] ) ? $reserve["time-start"] : date("g:i a");
+        $reserve["time-end"] = !empty( $reserve["time-end"] ) ? $reserve["time-end"] : date("g:i a");
 
-        return $this->ajaxResponse(0, "Success" . print_r($days, true));
+        $test = array();
+        foreach($days as $k => $d) {
+
+            $time_start = strtotime(date("F j, Y, ", $d) . $reserve["time-start"]);
+            $time_end = strtotime(date("F j, Y, ", $d) . $reserve["time-end"]);
+
+            $time_start = strtotime('April 12, 2016, 12:09 pm');
+            $time_end = strtotime('April 12, 2016, 07:30 pm');
+
+            $test[] = array("start" => $time_start, "end" => $time_end);
+            //TODO: check if room availabloe here!
+
+            $event_date = array();
+            $event_date['event_id']     = $event_id;
+            $event_date['room_id']      = $reserve['room_id'];
+            $event_date['date_from']    = date("Y-m-d H:i:s", $time_start);
+            $event_date['date_to']      = date("Y-m-d H:i:s", $time_end);
+            $event_date_id = $this->Event_date_model->insert($event_date);
+        }
+
+        //return $this->ajaxResponse(0, "Your event has been marked, we will contact you shortly.");
+        return $this->ajaxResponse(0, print_r($test, true));
     }
 
 

@@ -99,7 +99,7 @@ function formatPhoneNumber($phoneNumber) {
 }
 
 function convert2Timestamp( $datetime ) {
-	//04/08/2016 9:32 PM
+	//April 13, 2016 - 03:30 PM
 	return strtotime($datetime);
 }
 

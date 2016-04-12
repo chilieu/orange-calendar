@@ -62,16 +62,22 @@ class Room_model extends CI_Model {
     {
         $this->db->from( $this->table );
         $this->db->order_by("order", "asc");
-        //$this->db->order_by("onsite", "asc");
-        $this->db->order_by("room", "asc");
         return $this->db->get();
     }
 
     function getAllOnSite()
     {
         $this->db->from( $this->table );
-        $this->db->where('onsite', 1);
-        $this->db->order_by("room", "desc");
+        $this->db->where('onsite', 'onsite');
+        $this->db->order_by("order", "asc");
+        return $this->db->get();
+    }
+
+    function getAllOffSite()
+    {
+        $this->db->from( $this->table );
+        $this->db->where('onsite', 'offsite');
+        $this->db->order_by("order", "asc");
         return $this->db->get();
     }
 

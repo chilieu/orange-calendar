@@ -19,22 +19,30 @@ $days = array(
           <!--legend>Reservation</legend-->
 
           <div class="form-group col-md-12">
-              <label for="exampleInputEmail1">Event</label>
-              <input name="reserve[event]" type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex: Lễ Phục Sinh - Easter Sunday - Sunrise Joint Service">
+              <label for="event">Event</label>
+              <input name="reserve[event]" type="text" class="form-control" id="event" placeholder="Ex: Lễ Phục Sinh - Easter Sunday - Sunrise Joint Service">
           </div>
 
           <div class="form-group col-md-12">
-              <label for="exampleInputEmail1">Room</label>
-              <select name="reserve[room_id]" class="form-control">
-                <?php foreach($rooms->result() as $k => $r):?>
-                  <option value="<?=$r->id?>"><?=$r->room?></option>
-                <?php endforeach;?>
+              <label for="room">Room</label>
+              <select id="room" name="reserve[room_id]" class="form-control">
+                <optgroup label="At Church">
+                  <?php foreach($rooms->result() as $k => $r):?>
+                    <option value="<?=$r->id?>"><?=$r->room?></option>
+                  <?php endforeach;?>
+                </optgroup>
+
+                <optgroup label="OffSite">
+                  <?php foreach($offsite_rooms->result() as $k => $r):?>
+                    <option value="<?=$r->id?>"><?=$r->room?></option>
+                  <?php endforeach;?>
+                </optgroup>
+
               </select>
           </div>
 
           <div class="form-group col-md-12">
-              <label for="exampleInputEmail1">Notes</label>
-              <textarea name="reserve[notes]" class="form-control" placeholder="Notes ..."></textarea>
+              <textarea name="reserve[notes]" class="form-control" placeholder="Description ... (optional)"></textarea>
           </div>
 
           <div class='col-md-12'>
@@ -48,13 +56,13 @@ $days = array(
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-start]" type='text' class="form-control form_datetime1" id='onetime-starttime' placeholder="Date/time Start" />
+                      <input name="reserve[onetime-start]" type='text' class="form-control form_datetime1" id='onetime-starttime' placeholder="Start: <?=date("F j, Y, g:i a");?>" value="<?=date("F j, Y, g:i a");?>" />
 
                     </div>
 
                     <div class='col-md-6 col-sm-6 col-xs-6'>
 
-                      <input name="reserve[onetime-end]" type='text' class="form-control form_datetime1" id='onetime-endtime' placeholder="Date/time End" />
+                      <input name="reserve[onetime-end]" type='text' class="form-control form_datetime1" id='onetime-endtime' placeholder="End: <?=date("F j, Y, g:i a");?>" />
 
                     </div>
                   </div>
@@ -183,11 +191,13 @@ $days = array(
   <script type="text/javascript">
 
     $(".form_datetime1").datetimepicker({
-        format: 'MM dd, yyyy - HH:ii P',
+        format: 'MM dd, yyyy, HH:ii p',
         minuteStep: 15,
         forceParse: true,
         autoclose: true,
-        showMeridian: true
+        todayBtn: true,
+        showMeridian: true,
+        startDate: "<?=date("Y-m-d h:i");?>",
     });
 
     $(".form_datetime7").datetimepicker({
@@ -195,6 +205,7 @@ $days = array(
       autoclose: true,
       forceParse: true,
       todayBtn: true,
+      startDate: "<?=date("Y-m-d h:i A");?>",
       showMeridian: true
     });
 
