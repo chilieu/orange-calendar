@@ -111,7 +111,7 @@ function weekdayOnEveryWeek($weekday) {
 
 	$list = array();
 	while( $current <= $last ) {
-		$list[] = $current;
+		$list[] = date("Y-m-d", $current);
 		$current += $week;
 	}
 	return $list;
@@ -125,7 +125,7 @@ function weekdayOnEvery2Weeks($weekday){
 
 	$list = array();
 	while( $current <= $last ) {
-		$list[] = $current;
+		$list[] = date("Y-m-d", $current);
 		$current += $week;
 	}
 	return $list;
@@ -138,7 +138,7 @@ function dayOnEveryMonth($weekday){
 	for($i = 1; $i<=12; $i++) {
 		$month = str_pad($i, 2, "0", STR_PAD_LEFT);
 		$tc = strtotime("{$weekday} {$year}-{$month}");
-		$list[] = $tc;
+		$list[] = date("Y-m-d", $tc);
 	}
 
 	return $list;

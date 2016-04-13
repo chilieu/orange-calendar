@@ -93,6 +93,12 @@ class Index extends Leader_Controller
 
     public function postReserve() {
 
+        $this->load->model('Event_model');
+        $this->load->model('Event_date_model');
+
+        $test = $this->Event_date_model->checkAvailable(34, '2016-01-04 20:35:00', '2016-01-04 21:35:00');
+        return $this->ajaxResponse(0, print_r($test, true));
+
         $session_leader = $this->session->userdata('leader');
         $leader_id = $session_leader['leader_id'];
         $this->load->library('form_validation');
@@ -106,14 +112,11 @@ class Index extends Leader_Controller
             return $this->ajaxResponse(1, $error);
         }
 
-
-
         switch( $schedule ) {
             case 1://one time only
                 $start = $reserve['onetime-start'];
                 $end = $reserve['onetime-end'];
-                $start = Util\convert2Timestamp( $reserve['onetime-start'] );
-                $end = Util\convert2Timestamp( $reserve['onetime-end'] );
+
                 $days = array(
                             array("start" => $start, 'end' => $end)
                     );
@@ -143,23 +146,24 @@ class Index extends Leader_Controller
         $event['event']     = $reserve['event'];
         $event['notes']     = $reserve['notes'];
         $event['leader_id'] = $leader_id;
-
-
-        $this->load->model('Event_model');
         $event_id = $this->Event_model->insert($event);
 
-        $this->load->model('Event_date_model');
         $reserve["time-start"] = !empty( $reserve["time-start"] ) ? $reserve["time-start"] : date("g:i a");
         $reserve["time-end"] = !empty( $reserve["time-end"] ) ? $reserve["time-end"] : date("g:i a");
 
         $test = array();
         foreach($days as $k => $d) {
 
-            $time_start = strtotime(date("F j, Y, ", $d) . $reserve["time-start"]);
-            $time_end = strtotime(date("F j, Y, ", $d) . $reserve["time-end"]);
+            if( $schedule == 1 ) {
+                $time_start = $d['start'];
+                $time_end = $d['end'];
+            } else {
+                $time_start = $d ." ". $reserve["time-start"];
+                $time_end = $d ." ". $reserve["time-end"];
+            }
 
-            $time_start = strtotime('April 12, 2016, 12:09 pm');
-            $time_end = strtotime('April 12, 2016, 07:30 pm');
+            $time_start = strtotime($time_start);
+            $time_end = strtotime($time_end);
 
             $test[] = array("start" => $time_start, "end" => $time_end);
             //TODO: check if room availabloe here!
@@ -169,6 +173,7 @@ class Index extends Leader_Controller
             $event_date['room_id']      = $reserve['room_id'];
             $event_date['date_from']    = date("Y-m-d H:i:s", $time_start);
             $event_date['date_to']      = date("Y-m-d H:i:s", $time_end);
+            $event_date['approval']      = "approved";
             $event_date_id = $this->Event_date_model->insert($event_date);
         }
 

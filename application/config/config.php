@@ -480,6 +480,11 @@ $config['compress_output'] = FALSE;
 */
 $config['time_reference'] = 'local';
 
+if( ! ini_get('date.timezone') )
+{
+   date_default_timezone_set('America/Los_Angeles');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Rewrite PHP Short Tags
