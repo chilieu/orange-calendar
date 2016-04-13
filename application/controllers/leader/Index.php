@@ -96,8 +96,8 @@ class Index extends Leader_Controller
         $this->load->model('Event_model');
         $this->load->model('Event_date_model');
 
-        $test = $this->Event_date_model->checkAvailable(34, '2016-01-04 20:35:00', '2016-01-04 21:35:00');
-        return $this->ajaxResponse(0, print_r($test, true));
+        //$test = $this->Event_date_model->checkAvailable(34, '2016-01-04 21:35:00', '2016-01-04 23:35:00');
+        //return $this->ajaxResponse(0, print_r($test, true));
 
         $session_leader = $this->session->userdata('leader');
         $leader_id = $session_leader['leader_id'];
@@ -163,17 +163,24 @@ class Index extends Leader_Controller
             }
 
             $time_start = strtotime($time_start);
+            $time_start = date("Y-m-d H:i:s", $time_start);
+
             $time_end = strtotime($time_end);
+            $time_end = date("Y-m-d H:i:s", $time_end);
+
 
             $test[] = array("start" => $time_start, "end" => $time_end);
             //TODO: check if room availabloe here!
+            $available = $this->Event_date_model->checkAvailable($reserve['room_id'], $time_start, $time_end);
+            $approval = 'approved';
+            if( count($available['start']) || count($available['end']) || count($available['current_between'])  ) $approval = 'rejected';
 
             $event_date = array();
             $event_date['event_id']     = $event_id;
             $event_date['room_id']      = $reserve['room_id'];
-            $event_date['date_from']    = date("Y-m-d H:i:s", $time_start);
-            $event_date['date_to']      = date("Y-m-d H:i:s", $time_end);
-            $event_date['approval']      = "approved";
+            $event_date['date_from']    = $time_start;
+            $event_date['date_to']      = $time_end;
+            $event_date['approval']      = $approval;
             $event_date_id = $this->Event_date_model->insert($event_date);
         }
 

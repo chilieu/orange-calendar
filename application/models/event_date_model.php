@@ -72,7 +72,7 @@ class Event_date_model extends CI_Model {
         $this->db->where("room_id", $room_id);
         $this->db->where("( date_from BETWEEN '{$start}' AND '{$end}' OR date_to BETWEEN '{$start}' AND '{$end}' )");
         $q3 = $this->db->get();
-        $array['between'] = $q3->result();
+        $array['current_between'] = $q3->result();
         return $array;
 
     }
