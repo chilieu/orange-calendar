@@ -42,7 +42,7 @@ $days = array(
           </div>
 
           <div class="form-group col-md-12">
-              <textarea name="reserve[notes]" class="form-control" placeholder="Description ... (optional)"></textarea>
+              <textarea name="reserve[description]" class="form-control" placeholder="Description ... (optional)"></textarea>
           </div>
 
           <div class='col-md-12'>
@@ -251,10 +251,12 @@ $( document ).ready(function() {
                 console.log(data.status);
                 console.log(data.message);
                 addGrowlMessage(data.status, data.message);
-                if( data.status == 0 ) {
-                    /*sending to thank you page*/
-                }
-                  setTimeout(function(){ btn.button('reset'); }, 2000);
+                setTimeout(function(){
+                  if( data.status == 0 ) {
+                      window.location.href = data.data.redirect;
+                  }
+                  btn.button('reset');
+                }, 2000);
             },
             error: function( jqXHR, textStatus, errorThrown){
               addGrowlMessage(1, textStatus + ": " + errorThrown);

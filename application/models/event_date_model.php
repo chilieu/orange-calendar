@@ -26,9 +26,10 @@ class Event_date_model extends CI_Model {
         $query = $this->db->get();
     }
 
-    function getAll()
+    function getAllByEventID( $event_id )
     {
         $this->db->from( $this->table );
+        $this->db->where('event_id', $event_id);
         $this->db->order_by("date", "asc");
         return $this->db->get();
     }
@@ -54,6 +55,7 @@ class Event_date_model extends CI_Model {
         //first check if start time is in between any current event
         $this->db->from($this->table);
         $this->db->where("room_id", $room_id);
+        $this->db->where("approval", 'approved');
         $this->db->where("date_from <=", $start);
         $this->db->where("date_to >=", $start);
         $q1 = $this->db->get();
@@ -62,6 +64,7 @@ class Event_date_model extends CI_Model {
         //second check if end time is in between any current event
         $this->db->from($this->table);
         $this->db->where("room_id", $room_id);
+        $this->db->where("approval", 'approved');
         $this->db->where("date_from <=", $end);
         $this->db->where("date_to >=", $end);
         $q2 = $this->db->get();
@@ -70,6 +73,7 @@ class Event_date_model extends CI_Model {
         //third check if current event between start and end time
         $this->db->from($this->table);
         $this->db->where("room_id", $room_id);
+        $this->db->where("approval", 'approved');
         $this->db->where("( date_from BETWEEN '{$start}' AND '{$end}' OR date_to BETWEEN '{$start}' AND '{$end}' )");
         $q3 = $this->db->get();
         $array['current_between'] = $q3->result();

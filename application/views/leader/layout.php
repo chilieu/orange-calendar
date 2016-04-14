@@ -31,6 +31,9 @@
     <script src="<?php echo base_url('public/js/bootstrap-datetimepicker.js'); ?>"></script>
     <script src="<?php echo base_url('public/js/bootstrap-datetimepicker-2.js'); ?>"></script>
 
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
     <script type="text/javascript">
     $(document).ready(function() {
             initGrowls();
@@ -80,7 +83,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Reservation</a></li>
-        <!--li class="<?=($this->uri->segment(3)=="contactAdmin") ? "active" : "";?>"><a href="<?=base_url("/leader/index/contactAdmin");?>">Contact Admin</a></li-->
+        <li class="<?=($this->uri->segment(3)=="events") ? "active" : "";?>"><a href="<?=base_url("/leader/index/events");?>">Events</a></li>
         <li class="<?=($this->uri->segment(3)=="profile") ? "active" : "";?>"><a href="<?=base_url("/leader/index/profile");?>">Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

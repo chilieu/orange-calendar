@@ -29,6 +29,14 @@ class Event_model extends CI_Model {
     	$query = $this->db->get();
     }
 
+    function getByLeaderId($leader_id)
+    {
+        $this->db->from($this->table);
+        $this->db->where('leader_id', $leader_id);
+        $this->db->order_by("creation_date", "desc");
+        return $this->db->get();
+    }
+
     function getById($id)
     {
     	$this->db->from($this->table);

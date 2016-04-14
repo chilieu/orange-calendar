@@ -27,6 +27,26 @@ class Index extends Leader_Controller
 
     }
 
+    public function events()
+    {
+        $session_leader = $this->session->userdata('leader');
+        $leader_id = $session_leader['leader_id'];
+
+        $this->load->model('Event_model');
+        $events = $this->Event_model->getByLeaderId( $leader_id );
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/events', array('events' => $events), true);
+        $this->render( $this->layout );
+    }
+
+    public function eventDetail()
+    {
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-detail', array(), true);
+        $this->render( $this->layout );
+
+    }
+
     public function profile()
     {
         $this->load->model('Area_model');
@@ -144,7 +164,7 @@ class Index extends Leader_Controller
 
         $event = array();
         $event['event']     = $reserve['event'];
-        $event['notes']     = $reserve['notes'];
+        $event['description']     = $reserve['description'];
         $event['leader_id'] = $leader_id;
         $event_id = $this->Event_model->insert($event);
 
@@ -169,7 +189,8 @@ class Index extends Leader_Controller
             $time_end = date("Y-m-d H:i:s", $time_end);
 
 
-            $test[] = array("start" => $time_start, "end" => $time_end);
+            //$test[] = array("start" => $time_start, "end" => $time_end);
+
             //TODO: check if room availabloe here!
             $available = $this->Event_date_model->checkAvailable($reserve['room_id'], $time_start, $time_end);
             $approval = 'approved';
@@ -185,7 +206,7 @@ class Index extends Leader_Controller
         }
 
         //return $this->ajaxResponse(0, "Your event has been marked, we will contact you shortly.");
-        return $this->ajaxResponse(0, print_r($test, true));
+        return $this->ajaxResponse(0, "Your event has been added, please review detail in next page.", array('redirect' => '/leader/index/eventDetail/' . $event_id) );
     }
 
 
