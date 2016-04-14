@@ -39,10 +39,15 @@ class Index extends Leader_Controller
         $this->render( $this->layout );
     }
 
-    public function eventDetail()
+    public function eventDetail($id)
     {
+        $this->load->model('Event_model');
+        $event = $this->Event_model->getById($id);
 
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-detail', array(), true);
+        $this->load->model('Event_date_model');
+        $event_date = $this->Event_date_model->getAllByEventID($id);
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-detail', array("event" => $event, 'event_date' => $event_date), true);
         $this->render( $this->layout );
 
     }

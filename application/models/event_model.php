@@ -41,7 +41,7 @@ class Event_model extends CI_Model {
     {
     	$this->db->from($this->table);
     	$this->db->where('id', $id);
-    	$query = $this->db->get();
+    	return $this->db->get();
     }
 
     function getAll()

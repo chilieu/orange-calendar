@@ -28,9 +28,11 @@ class Event_date_model extends CI_Model {
 
     function getAllByEventID( $event_id )
     {
+        $this->db->select("event_date.*, room.room");
         $this->db->from( $this->table );
+        $this->db->join("room", "event_date.room_id = room.id");
         $this->db->where('event_id', $event_id);
-        $this->db->order_by("date", "asc");
+        $this->db->order_by("date_from", "asc");
         return $this->db->get();
     }
 
