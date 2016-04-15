@@ -82,7 +82,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Reservation</a></li>
+        <li class="<?=empty($this->uri->segment(3)) ? "active" : "";?>"><a href="<?=base_url("/leader");?>">Calendar</a></li>
+        <li class="<?=($this->uri->segment(3)=="reservation") ? "active" : "";?>"><a href="<?=base_url("/leader/index/reservation");?>">Reservation</a></li>
         <li class="<?=($this->uri->segment(3)=="events") ? "active" : "";?>"><a href="<?=base_url("/leader/index/events");?>">Events</a></li>
         <li class="<?=($this->uri->segment(3)=="profile") ? "active" : "";?>"><a href="<?=base_url("/leader/index/profile");?>">Profile</a></li>
       </ul>
@@ -98,6 +99,15 @@
     <?=@$_body?>
 
     </div><!-- /.container -->
+
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/cupertino/jquery-ui.min.css'); ?>' rel='stylesheet' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.min.css'); ?>' rel='stylesheet' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.print.css'); ?>' rel='stylesheet' media='print' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/scheduler.min.css'); ?>' rel='stylesheet' />
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/lib/moment.min.js'); ?>'></script>
+
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.min.js'); ?>'></script>
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/scheduler.min.js'); ?>'></script>
 
   </body>
 </html>

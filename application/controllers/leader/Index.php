@@ -10,6 +10,21 @@ class Index extends Leader_Controller
 
     public function index()
     {
+        $this->load->model('Room_model');
+        $this->load->model('Event_model');
+        $this->load->model('Event_date_model');
+
+        $rooms = array();
+        $rooms = $this->Room_model->getAll();
+
+        $events = $this->Event_date_model->getAllApproved();
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/calendar', array('rooms' => $rooms, 'events' => $events), true);
+        $this->render( $this->layout );
+    }
+
+    public function reservation()
+    {
 
         $this->load->model('Room_model');
         $rooms = $this->Room_model->getAllOnSite();
