@@ -67,6 +67,36 @@ class Index extends Leader_Controller
 
     }
 
+    public function eventConflict($id)
+    {
+
+        $this->load->model('Event_date_model');
+        $event_date = $this->Event_date_model->getById($id);
+        $event_date = $event_date->result()[0];
+
+
+        $not_available = $this->Event_date_model->checkAvailable( $event_date->room_id, $event_date->date_from, $event_date->date_to  );
+        //$not_available = array_merge($not_available['start'], $not_available['end'], $not_available['current_between']);
+        //$not_available = array_unique($not_available);
+        //echo "<pre>";print_r($not_available);echo "</pre>";
+
+        $not_available = $not_available['total'];
+
+
+        $conflict = array();
+        $this->load->model('Event_model');
+        foreach ($not_available as $key => $e) {
+            $temp = $this->Event_model->getById( $e['event_id'] );
+            $conflict[] = $temp->result_array()[0];
+        }
+
+        $conflict_time['start'] = $event_date->date_from;
+        $conflict_time['end'] = $event_date->date_to;
+
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-conflict', array('conflict' => $conflict, 'conflict_time' => $conflict_time), true);
+        $this->render( 'layout-popup' );
+    }
+
     public function profile()
     {
         $this->load->model('Area_model');

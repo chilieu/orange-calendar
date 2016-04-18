@@ -39,8 +39,10 @@ class Event_model extends CI_Model {
 
     function getById($id)
     {
+        //$this->db->select("event.*, event_date.*");
     	$this->db->from($this->table);
-    	$this->db->where('id', $id);
+        //$this->db->join('event_date', 'event.id = event_date.event_id');
+    	$this->db->where('event.id', $id);
     	return $this->db->get();
     }
 

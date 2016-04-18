@@ -1,3 +1,4 @@
+
 <script>
 
   $(function() { // document ready
@@ -22,7 +23,7 @@
         center: 'title',
         right: 'timelineDay,timelineThreeDays,agendaWeek,month'
       },
-      defaultView: 'timelineDay',
+      defaultView: 'agendaWeek',
       views: {
         timelineThreeDays: {
           type: 'timeline',
@@ -30,7 +31,7 @@
         }
       },
       // the point if this demo is to demonstrate dayClick...
-      dayClick: function(date, jsEvent, view, resourceObj) {
+      /*dayClick: function(date, jsEvent, view, resourceObj) {
         console.log(
           'dayClick',
           date.format(),
@@ -50,6 +51,7 @@
         }
         $('#calendar').fullCalendar('unselect');
       },
+      */
       resourceLabelText: 'Rooms',
       resources: [
       <?php foreach($rooms->result() as $r):?>
@@ -59,11 +61,12 @@
       events: [
       <?php foreach($events->result() as $e):?>
       <?php
-        $tip = date("g:i a", $e->time_from) ."-". date("g:i a", $e->time_to) . "-" . $e->event . "<>" . $e->notes;
+        $tip = date("g:i a", strtotime($e->date_from) ) ."-". date("g:i a", strtotime($e->date_to) ). "-" . $e->event . "<>" . $e->notes;
       ?>
-        { id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", $e->time_from);?>', end: '<?=date("c", $e->time_to);?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
+        { id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", strtotime($e->date_from));?>', end: '<?=date("c", strtotime($e->date_to));?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
       <?php endforeach;?>
       ],
+      /*
       eventMouseover: function(calEvent, jsEvent) {
           var tooltip = '<div class="tooltipevent" style="text-align:center;padding:3px;width:100px;height:100px;background:#efefef;border:1px solid #333;position:absolute;z-index:10001;">' + calEvent.title + '</div>';
           $("body").append(tooltip);
@@ -75,7 +78,7 @@
               $('.tooltipevent').css('top', e.pageY + 10);
               $('.tooltipevent').css('left', e.pageX + 20);
           });
-      },
+      },*/
       eventMouseout: function(calEvent, jsEvent) {
           $(this).css('z-index', 8);
           $('.tooltipevent').remove();
@@ -84,9 +87,6 @@
     });
 
   });
-/*
-2016-03-07T02:00:00
-2016-03-07T07:00:00
-*/
+
 </script>
     <div id='calendar'></div>

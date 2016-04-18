@@ -12,15 +12,15 @@ class Index extends Front_Controller
 	{
         $this->load->model('Room_model');
         $this->load->model('Event_model');
-        $events = array();
-        //$events = $this->Event_model->getAll();
+        $this->load->model('Event_date_model');
 
         $rooms = array();
-        //$rooms = $this->Room_model->getAllOnSite();
+        $rooms = $this->Room_model->getAll();
 
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('events' => $events, 'rooms' => $rooms), true);
+        $events = $this->Event_date_model->getAllApproved();
 
-		$this->render( 'layout-calendar' );
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('rooms' => $rooms, 'events' => $events), true);
+        $this->render( 'layout-calendar' );
 	}
 
 	public function data()

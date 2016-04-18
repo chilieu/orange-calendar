@@ -29,7 +29,7 @@
                 <tbody>
 
                 <?php foreach ($events->result() as $row):?>
-                    <tr class="<?=($row->public == 1) ? "success" : "";?>">
+                    <tr>
                         <td class="hide"><?=$row->id?></td>
                         <td><?=$row->event?></td>
                         <td><?=$row->description?></td>
