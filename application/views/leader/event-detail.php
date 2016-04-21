@@ -6,8 +6,8 @@
     <thead>
         <th class="text-center">Room</th>
         <th width="120px" class="text-center">Day</th>
-        <th width="100px" class="text-center">From</th>
-        <th width="100px" class="text-center">To</th>
+        <th width="75px" class="text-center">From</th>
+        <th width="50px" class="text-center">To</th>
         <th width="100px" class="text-center"></th>
     </thead>
 
@@ -16,24 +16,27 @@
         <?php foreach($event_date->result() as $row):?>
 
         <?php if( $month != date("M", strtotime($row->date_from) ) ):?>
-        <tr class="info"><td colspan="5" class="text-center"><?=date("M, Y", strtotime($row->date_from) );?></td></tr>
+        <tr class="info"><td colspan="5" class="text-center"><b><?=date("M, Y", strtotime($row->date_from) );?></b></td></tr>
         <?php endif;?>
         <?php $month = date("M", strtotime($row->date_from) );?>
 
-        <tr class="<?=($row->approval == 'approved') ? "" : "danger";?>">
+        <tr class="event-date-row <?=($row->approval == 'approved') ? "" : "danger";?>">
             <td>
-
-                <?=$row->room?>
+                <select class="form-control">
+                  <?php foreach($rooms->result() as $k => $r):?>
+                    <option value="<?=$r->id?>" <?=($row->room_id == $r->id) ? "selected" : "";?> ><?=$r->room?></option>
+                  <?php endforeach;?>
+                </select>
                 <?php if( $row->approval !== 'approved' ):?>
                     <a href="/leader/index/eventConflict/<?=$row->id;?>/" data-toggle="modal" data-target="#eventConflict">
                       <small>(Not Available)</small>
                     </a>
                 <?php endif;?>
             </td>
-            <td class="text-left"><input class="form_datetime2" value="<?=date("M j, Y", strtotime($row->date_from) )?>"></td>
-            <td class="text-center"><input class="form_datetime21" value="<?=date("h:i a", strtotime($row->date_from) )?>"></td>
-            <td class="text-center"><input class="form_datetime21" value="<?=date("h:i a", strtotime($row->date_to) )?>"></td>
-            <td class="text-center"><a href="" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i></a></td>
+            <td class="text-left"><input class="form-control form_datetime2" value="<?=date("M j, Y", strtotime($row->date_from) )?>"></td>
+            <td class="text-center"><input class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_from) )?>"></td>
+            <td class="text-center"><input class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_to) )?>"></td>
+            <td class="text-center"><a href="#" class="btn btn-success">Update</a></td>
         </tr>
         <?php endforeach;?>
 
