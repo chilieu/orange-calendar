@@ -10,4 +10,11 @@
 	</li>
 <?php endforeach;?>
 </ul>
+
+<fieldset>
+	<legend>Change</legend>
+
+
+</fieldset>
+
 </div>
