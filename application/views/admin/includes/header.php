@@ -12,17 +12,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="dropdown <?=( ($this->uri->segment(1)=="administrator" || $this->uri->segment(1)=="administrator-list") && empty($this->uri->segment(2)) ) ? "active" : "";?>">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Public <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="<?=base_url("/administrator");?>">Calendar</a></li>
-            <li><a href="<?=base_url("/administrator-list/");?>">Table</a></li>
-          </ul>
-        </li>
-        <li class="dropdown <?=($this->uri->segment(1)=="administrator-reservation" && empty($this->uri->segment(2)) ) ? "active" : "";?>">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservation <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="<?=base_url("/administrator-reservation/");?>">Reservation</a></li>
-            <li><a href="<?=base_url("/administrator-request/");?>">Request</a></li>
+            <li><a href="<?=base_url("/administrator");?>">Calendar</a></li>
+            <li><a href="<?=base_url("/administrator-list/");?>">List</a></li>
           </ul>
         </li>
         <li class="<?=($this->uri->segment(2)=="leader") ? "active" : "";?>"><a href="<?=base_url("/administrator/leader");?>">Leaders</a></li>

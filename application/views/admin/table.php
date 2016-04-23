@@ -19,27 +19,27 @@
                 <thead>
                     <tr>
                         <th class="hide">ID</th>
-                        <th width="180px">Date</th>
                         <th>Event</th>
-                        <th width="200px">Room</th>
-                        <th width="100px">From</th>
-                        <th width="100px">To</th>
-                        <th width="200px">Contact</th>
+                        <th>Description</th>
+                        <th width="180px">Creation Date</th>
+                        <th width="100px"></th>
                     </tr>
                 </thead>
 
                 <tbody>
+
                 <?php foreach ($events->result() as $row):?>
                     <tr>
                         <td class="hide"><?=$row->id?></td>
-                        <td><?=date("F j, Y", $row->date)?></td>
                         <td><?=$row->event?></td>
-                        <td><?=$row->room?></td>
-                        <td><?=date("h:i A", $row->time_from)?></td>
-                        <td><?=date("h:i A", $row->time_to)?></td>
-                        <td><?=$row->name?></td>
+                        <td><?=$row->description?></td>
+                        <td><?=date("F j, Y", strtotime($row->creation_date) )?></td>
+                        <td align="center">
+                            <a href="/admin/index/eventDetail/<?=$row->id?>/" class="text-default deny" data-id="<?=$row->id?>">View</a>
+                        </td>
                     </tr>
                 <?php endforeach;?>
+
                 </tbody>
         </table>
 
@@ -48,9 +48,11 @@
 </div>
 
 <script type="text/javascript">
+
 $(document).ready(function() {
-    $('#event-table').DataTable({
-        order: [[ 1, 'asc' ]],
+
+    var event_table = $('#event-table').DataTable({
+        order: [[ 3, 'desc' ]],
         pageLength: 15
     });
 

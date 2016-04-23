@@ -48,11 +48,8 @@ class Event_model extends CI_Model {
 
     function getAll()
     {
-        $this->db->from( $this->table );
-        $this->db->join('room', 'room.id = event.room_id');
-        $this->db->join('contact', 'contact.id = event.contact_id');
-        $this->db->where('approval', 1);
-        $this->db->order_by("date", "asc");
+        $this->db->from($this->table);
+        $this->db->order_by("creation_date", "desc");
         return $this->db->get();
     }
 

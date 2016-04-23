@@ -58,6 +58,7 @@ class Index extends Leader_Controller
     {
         $this->load->model('Room_model');
         $rooms = $this->Room_model->getAllOnSite();
+        $offsite_rooms = $this->Room_model->getAllOffSite();
 
         $this->load->model('Event_model');
         $event = $this->Event_model->getById($id);
@@ -65,7 +66,7 @@ class Index extends Leader_Controller
         $this->load->model('Event_date_model');
         $event_date = $this->Event_date_model->getAllByEventID($id);
 
-        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-detail', array( "rooms" => $rooms, "event" => $event, 'event_date' => $event_date), true);
+        $this->viewData['_body'] = $this->load->view( $this->APP . '/event-detail', array( 'offsite_rooms' => $offsite_rooms, "rooms" => $rooms, "event" => $event, 'event_date' => $event_date), true);
         $this->render( $this->layout );
 
     }

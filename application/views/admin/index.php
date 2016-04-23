@@ -1,4 +1,4 @@
-<?php /*
+
 <script>
 
 	$(function() { // document ready
@@ -23,7 +23,7 @@
 				center: 'title',
 				right: 'timelineDay,timelineThreeDays,agendaWeek,month'
 			},
-			defaultView: 'month',
+			defaultView: 'agendaWeek',
 			views: {
 				timelineThreeDays: {
 					type: 'timeline',
@@ -60,9 +60,9 @@
 			events: [
 			<?php foreach($events->result() as $e):?>
 			<?php
-				$tip = date("g:i a", $e->time_from) ."-". date("g:i a", $e->time_to) . "-" . $e->event . "<>" . $e->notes;
+				$tip = date("g:i a", strtotime($e->date_from) ) ."-". date("g:i a", strtotime($e->date_to) ). "-" . $e->event . "<>" . $e->notes;
 			?>
-				{ id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", $e->time_from);?>', end: '<?=date("c", $e->time_to);?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
+				{ id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", strtotime($e->date_from));?>', end: '<?=date("c", strtotime($e->date_to));?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
 			<?php endforeach;?>
 			],
 			eventMouseover: function(calEvent, jsEvent) {
@@ -88,4 +88,3 @@
 
 </script>
 		<div id='calendar'></div>
-*/?>

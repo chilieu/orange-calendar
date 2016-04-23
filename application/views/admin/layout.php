@@ -14,6 +14,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="<?php echo base_url('public/css/style.css'); ?>" >
     <link rel="stylesheet" href="<?php echo base_url('public/css/bootstrap-datetimepicker.css'); ?>" >
+    <link rel="stylesheet" href="<?php echo base_url('public/css/bootstrap-datetimepicker-2.css'); ?>" >
 
      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
@@ -77,6 +78,16 @@
     <?=@$_body?>
     </div><!-- /.container -->
 
-</body>
 
+
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/cupertino/jquery-ui.min.css'); ?>' rel='stylesheet' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.min.css'); ?>' rel='stylesheet' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.print.css'); ?>' rel='stylesheet' media='print' />
+    <link href='<?php echo base_url('public/js/fullcalendar-scheduler/scheduler.min.css'); ?>' rel='stylesheet' />
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/lib/moment.min.js'); ?>'></script>
+
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/lib/fullcalendar.min.js'); ?>'></script>
+    <script src='<?php echo base_url('public/js/fullcalendar-scheduler/scheduler.min.js'); ?>'></script>
+
+</body>
 </html>

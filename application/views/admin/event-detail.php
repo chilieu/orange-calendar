@@ -1,6 +1,19 @@
-<h1><?=$event->result()[0]->event;?></h1>
-<blockquote><?=$event->result()[0]->description;?></blockquote>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="form-group">
+      <input name="event" class="form-control" value="<?=$event->result()[0]->event;?>" type="text">
+    </div>
 
+    <div class="form-group">
+      <textarea name="description" class="form-control"><?=$event->result()[0]->description;?></textarea>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary">Update</button>
+    </div>
+
+  </div>
+</div>
 <div class="col-md-12 col-sm-12">
 <table class="table table-hover table-striped" id="event-table">
     <thead>
@@ -38,7 +51,7 @@
 
                 </select>
                 <?php if( $row->approval !== 'approved' ):?>
-                    <a href="/leader/index/eventConflict/<?=$row->id;?>/" data-toggle="modal" data-target="#eventConflict">
+                    <a href="/admin/index/eventConflict/<?=$row->id;?>/" data-toggle="modal" data-target="#eventConflict">
                       <small>(Not Available)</small>
                     </a>
                 <?php endif;?>
