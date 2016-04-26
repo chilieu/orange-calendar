@@ -62,7 +62,39 @@
 			<?php
 				$tip = date("g:i a", strtotime($e->date_from) ) ."-". date("g:i a", strtotime($e->date_to) ). "-" . $e->event . "<>" . $e->notes;
 			?>
-				{ id: '<?=$e->id?>', resourceId: 'r<?=$e->room_id?>', start: '<?=date("c", strtotime($e->date_from));?>', end: '<?=date("c", strtotime($e->date_to));?>', title: "<?=$e->event?>", tip: "<?=$tip?>" },
+        {
+          id: '<?=$e->id?>',
+          resourceId: 'r<?=$e->room_id?>',
+          start: '<?=date("c", strtotime($e->date_from));?>',
+          end: '<?=date("c", strtotime($e->date_to));?>',
+          title: "<?=$e->event?>",
+          <?php if( $e->onsite == "onsite" ):?>
+
+            <?php if( $e->priority == "High" ):?>
+            textColor: "white",
+            <?php elseif( $e->priority == "Medium" ):?>
+            textColor: "black",
+            backgroundColor: "",
+            <?php elseif( $e->priority == "Low" ):?>
+            textColor: "black",
+            <?php elseif( $e->priority == "VN" ):?>
+            textColor: "red",
+            <?php elseif( $e->priority == "EM" ):?>
+            textColor: "green",
+            <?php endif;?>
+
+            <?php if( $e->priority == "High" ):?>
+            backgroundColor: "#0726BE",
+            <?php else:?>
+            backgroundColor: "orange",
+            <?php endif;?>
+
+          <?php else:?>
+            textColor: "black",
+            backgroundColor: "white",
+          <?php endif;?>
+          tip: "<?=$tip?>"
+        },
 			<?php endforeach;?>
 			],
 			eventMouseover: function(calEvent, jsEvent) {

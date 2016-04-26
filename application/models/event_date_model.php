@@ -21,7 +21,7 @@ class Event_date_model extends CI_Model {
 
     function getAllApproved($id)
     {
-        $this->db->select("event_date.*, room.id as room_id1, event.id as event_id1, event.event, event.description, room.room");
+        $this->db->select("event_date.*, room.id as room_id1, event.id as event_id1, event.event, event.description, room.room, room.onsite as onsite, event.priority as priority");
         $this->db->from($this->table);
         $this->db->join("room", "event_date.room_id = room.id");
         $this->db->join("event", "event_date.event_id = event.id");

@@ -18,7 +18,7 @@ class Index extends Front_Controller
         $rooms = $this->Room_model->getAll();
 
         $events = $this->Event_date_model->getAllApproved();
-
+//echo "<pre>";print_r($events->result_array());echo "</pre>";
         $this->viewData['_body'] = $this->load->view( $this->APP . '/home/index', array('rooms' => $rooms, 'events' => $events), true);
         $this->render( 'layout-calendar' );
 	}
