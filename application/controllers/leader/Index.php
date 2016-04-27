@@ -263,5 +263,37 @@ class Index extends Leader_Controller
         return $this->ajaxResponse(0, "Your event has been added, please review detail in next page.", array('redirect' => '/leader/index/eventDetail/' . $event_id) );
     }
 
+    public function deleteEventDate() {
+        $id = $this->input->post('id');
+        $this->load->model('Event_date_model');
+        $this->Event_date_model->delete($id);
+        return $this->ajaxResponse(0, "Event has been updated.");
+    }
+
+    public function updateEventDate() {
+        $data = $this->input->post();
+        $this->load->model('Event_date_model');
+
+        $time_start = strtotime($data['date'] ." ". $data['start']);
+        $time_start = date("Y-m-d H:i:s", $time_start);
+
+        $time_end = strtotime($data['date'] ." ". $data['end']);
+        $time_end = date("Y-m-d H:i:s", $time_end);
+
+        $available = $this->Event_date_model->checkAvailable($data['room'], $time_start, $time_end, $data['id']);
+
+        if( count($available['start']) || count($available['end']) || count($available['current_between'])  ){
+            return $this->ajaxResponse(1, "Changing date is conflicted with another event.");
+        }
+
+        $d['event_id'] = $data['event_id'];
+        $d['room_id'] = $data['room'];
+        $d['date_from'] = $time_start;
+        $d['date_to'] = $time_end;
+        $d['approval'] = 'approved';
+        $this->Event_date_model->update($data['id'], $d);
+
+        return $this->ajaxResponse(0, "Event has been updated.", print_r($available,true));
+    }
 
 }

@@ -19,6 +19,13 @@ class Event_date_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        $re = $this->db->update($this->table, $data);
+        return $id;
+    }
+
     function getAllApproved($id)
     {
         $this->db->select("event_date.*, room.id as room_id1, event.id as event_id1, event.event, event.description, room.room, room.onsite as onsite, event.priority as priority");
@@ -60,7 +67,13 @@ class Event_date_model extends CI_Model {
         return $this->db->update($this->table, array('approval' => 'rejected') );
     }
 
-    function checkAvailable($room_id, $start, $end)
+    function delete($id)
+    {
+        if( !$id ) return;
+        return $this->db->delete($this->table, array('id' => $id));
+    }
+
+    function checkAvailable($room_id, $start, $end, $except_id=array())
     {
         if( empty( $room_id ) || empty( $start ) || empty( $end )) return false;
 
@@ -70,6 +83,9 @@ class Event_date_model extends CI_Model {
         $this->db->where("approval", 'approved');
         $this->db->where("date_from <=", $start);
         $this->db->where("date_to >=", $start);
+        if( !empty($except_id) ) {
+            $this->db->where_not_in("id", $except_id);
+        }
         $q1 = $this->db->get();
         $array['start'] = $q1->result_array();
 
@@ -79,6 +95,9 @@ class Event_date_model extends CI_Model {
         $this->db->where("approval", 'approved');
         $this->db->where("date_from <=", $end);
         $this->db->where("date_to >=", $end);
+        if( !empty($except_id) ) {
+            $this->db->where_not_in("id", $except_id);
+        }
         $q2 = $this->db->get();
         $array['end'] = $q2->result_array();
 
@@ -87,6 +106,9 @@ class Event_date_model extends CI_Model {
         $this->db->where("room_id", $room_id);
         $this->db->where("approval", 'approved');
         $this->db->where("( date_from BETWEEN '{$start}' AND '{$end}' OR date_to BETWEEN '{$start}' AND '{$end}' )");
+        if( !empty($except_id) ) {
+            $this->db->where_not_in("id", $except_id);
+        }
         $q3 = $this->db->get();
         $array['current_between'] = $q3->result_array();
 
