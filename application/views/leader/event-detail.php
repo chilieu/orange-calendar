@@ -1,9 +1,36 @@
-<h1><?=$event->result()[0]->event;?></h1>
+<h1><input name="event" value="<?=$event->result()[0]->event;?>" class="form-control" id="event-event"></h1>
 
-<blockquote><?=$event->result()[0]->description;?></blockquote>
-
+<textarea name="description" class="form-control" id="event-description"><?=$event->result()[0]->description;?></textarea>
+<br>
+<button class="btn btn-primary" id="update-event" data-id="<?=$event->result()[0]->id;?>">Save</button>
 <div class="col-md-12 col-sm-12">
 <table class="table table-hover table-striped" id="event-table">
+  <form action="" id="add-new-event-date" method="POST">
+    <tbody>
+        <td class="text-center">
+                <select class="form-control" id="" name="room">
+
+                  <optgroup label="At Church">
+                    <?php foreach($rooms->result() as $k => $r):?>
+                      <option value="<?=$r->id?>"><?=$r->room?></option>
+                    <?php endforeach;?>
+                  </optgroup>
+
+                  <optgroup label="OffSite">
+                    <?php foreach($offsite_rooms->result() as $k => $r):?>
+                      <option value="<?=$r->id?>"><?=$r->room?></option>
+                    <?php endforeach;?>
+                  </optgroup>
+
+                </select>
+        </td>
+        <td class="text-center"><input class="form-control form_datetime2" name="date" placeholder="Date"></td>
+        <td class="text-center"><input class="form-control form_datetime21" name="start" placeholder="Start Time"></td>
+        <td class="text-center"><input class="form-control form_datetime21" name="end" placeholder="End Time"></td>
+        <td class="text-center"><button class="btn btn-success" id="add-date">Add</button></td>
+    </tbody>
+  </form>
+
     <thead>
         <th class="text-center">Room</th>
         <th width="120px" class="text-center">Day</th>
@@ -80,6 +107,26 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+  $("#add-date").click(function(e){
+    e.preventDefault();
+
+  });
+
+
+  $("#update-event").click(function(e){
+    e.preventDefault();
+      var obj = $(this);
+      var id = obj.attr("data-id");
+      var event = $("#event-event").val();
+      var description = $("#event-description").val();
+
+      $.post( "/leader/index/updateEvent/", { id: id, event: event, description: description})
+        .done(function( data ) {
+          var data = $.parseJSON(data);
+          addGrowlMessage(data.status, data.message);
+      });
+  });
 
   $(".save").click(function(e){
     e.preventDefault();

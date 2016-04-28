@@ -293,7 +293,24 @@ class Index extends Leader_Controller
         $d['approval'] = 'approved';
         $this->Event_date_model->update($data['id'], $d);
 
-        return $this->ajaxResponse(0, "Event has been updated.", print_r($available,true));
+        return $this->ajaxResponse(0, "Event has been updated.");
+    }
+
+    public function updateEvent() {
+        $data = $this->input->post();
+
+        if( empty($data['event']) )
+            return $this->ajaxResponse(1, "Please enter event.");
+        /*
+        if( empty($data['description']) )
+            return $this->ajaxResponse(1, "Please enter event description.");*/
+
+        $d['event'] = $data['event'];
+        $d['description'] = $data['description'];
+
+        $this->load->model('Event_model');
+        $this->Event_model->update($data['id'], $d);
+        return $this->ajaxResponse(0, "Your event has been updated");
     }
 
 }
