@@ -30,6 +30,7 @@
 
     <script src="<?php echo base_url('public/js/moment-with-locales.js'); ?>"></script>
     <script src="<?php echo base_url('public/js/bootstrap-datetimepicker.js'); ?>"></script>
+    <script src="<?php echo base_url('public/js/bootstrap-datetimepicker-2.js'); ?>"></script>
     <script src="<?php echo base_url('public/js/jquery.rowreordering.js'); ?>"></script>
 
 

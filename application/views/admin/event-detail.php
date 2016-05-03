@@ -1,21 +1,37 @@
-<div class="row">
-  <div class="col-md-12 col-sm-12">
-    <div class="form-group">
-      <input name="event" class="form-control" value="<?=$event->result()[0]->event;?>" type="text">
-    </div>
+<h1><input name="event" value="<?=$event->result()[0]->event;?>" class="form-control" id="event-event"></h1>
 
-    <div class="form-group">
-      <textarea name="description" class="form-control"><?=$event->result()[0]->description;?></textarea>
-    </div>
-
-    <div class="form-group">
-      <button class="btn btn-primary">Update</button>
-    </div>
-
-  </div>
-</div>
+<textarea name="description" class="form-control" id="event-description"><?=$event->result()[0]->description;?></textarea>
+<br>
+<button class="btn btn-primary" id="update-event" data-id="<?=$event->result()[0]->id;?>">Save</button>
 <div class="col-md-12 col-sm-12">
 <table class="table table-hover table-striped" id="event-table">
+  <form id="add-new-event-date" method="POST" >
+    <input type="hidden" value="<?=$event->result()[0]->id;?>" name="event_id">
+    <tbody>
+        <td class="text-center">
+                <select class="form-control" name="room_id">
+
+                  <optgroup label="At Church">
+                    <?php foreach($rooms->result() as $k => $r):?>
+                      <option value="<?=$r->id?>"><?=$r->room?></option>
+                    <?php endforeach;?>
+                  </optgroup>
+
+                  <optgroup label="OffSite">
+                    <?php foreach($offsite_rooms->result() as $k => $r):?>
+                      <option value="<?=$r->id?>"><?=$r->room?></option>
+                    <?php endforeach;?>
+                  </optgroup>
+
+                </select>
+        </td>
+        <td class="text-center"><input class="form-control form_datetime2" name="date" placeholder="Date"></td>
+        <td class="text-center"><input class="form-control form_datetime21" name="start" placeholder="Start Time"></td>
+        <td class="text-center"><input class="form-control form_datetime21" name="end" placeholder="End Time"></td>
+        <td class="text-center"><button class="btn btn-success" id="add-date">Add</button></td>
+    </tbody>
+  </form>
+
     <thead>
         <th class="text-center">Room</th>
         <th width="120px" class="text-center">Day</th>
@@ -33,9 +49,9 @@
         <?php endif;?>
         <?php $month = date("M", strtotime($row->date_from) );?>
 
-        <tr class="event-date-row <?=($row->approval == 'approved') ? "" : "danger";?>">
+        <tr class="event-date-row <?=($row->approval == 'approved') ? "" : "danger";?>" id="row-<?=$row->id?>">
             <td>
-                <select class="form-control">
+                <select class="form-control" id="row-room-<?=$row->id?>">
 
                   <optgroup label="At Church">
                     <?php foreach($rooms->result() as $k => $r):?>
@@ -51,15 +67,18 @@
 
                 </select>
                 <?php if( $row->approval !== 'approved' ):?>
-                    <a href="/admin/index/eventConflict/<?=$row->id;?>/" data-toggle="modal" data-target="#eventConflict">
+                    <a href="/leader/index/eventConflict/<?=$row->id;?>/" data-toggle="modal" data-target="#eventConflict">
                       <small>(Not Available)</small>
                     </a>
                 <?php endif;?>
             </td>
-            <td class="text-left"><input class="form-control form_datetime2" value="<?=date("M j, Y", strtotime($row->date_from) )?>"></td>
-            <td class="text-center"><input class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_from) )?>"></td>
-            <td class="text-center"><input class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_to) )?>"></td>
-            <td class="text-center"><a href="#" class="btn btn-success">Update</a></td>
+            <td class="text-left"><input id="row-date-<?=$row->id?>" class="form-control form_datetime2" value="<?=date("M j, Y", strtotime($row->date_from) )?>"></td>
+            <td class="text-center"><input id="row-start-<?=$row->id?>" class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_from) )?>"></td>
+            <td class="text-center"><input id="row-end-<?=$row->id?>" class="form-control form_datetime21" value="<?=date("h:i a", strtotime($row->date_to) )?>"></td>
+            <td class="text-center">
+              <a href="#" class="btn btn-success save" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span></a>
+              <a href="#" class="btn btn-danger delete" data-id="<?=$row->id?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+            </td>
         </tr>
         <?php endforeach;?>
 
@@ -89,6 +108,71 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+  $("#add-date").click(function(e){
+      e.preventDefault();
+      var obj = $(this);
+      var form = $("#add-new-event-date");
+
+      $.ajax({
+        type: "POST",
+        url: "/leader/index/addEventDate/",
+        data: form.serialize(),
+        success: function( response ) {
+          var data = $.parseJSON(response);
+          addGrowlMessage(data.status, data.message);
+        }
+      });
+
+  });
+
+
+  $("#update-event").click(function(e){
+    e.preventDefault();
+      var obj = $(this);
+      var id = obj.attr("data-id");
+      var event = $("#event-event").val();
+      var description = $("#event-description").val();
+
+      $.post( "/leader/index/updateEvent/", { id: id, event: event, description: description})
+        .done(function( data ) {
+          var data = $.parseJSON(data);
+          addGrowlMessage(data.status, data.message);
+      });
+  });
+
+  $(".save").click(function(e){
+    e.preventDefault();
+      var obj = $(this);
+      var id = obj.attr("data-id");
+      var event_id = <?=$event->result()[0]->id;?>;
+      var room = $("#row-room-" + id).val();
+      var date = $("#row-date-" + id).val();
+      var start = $("#row-start-" + id).val();
+      var end = $("#row-end-" + id).val();
+      $.post( "/leader/index/updateEventDate/", { id: id, event_id: event_id, room: room, date: date, start: start, end: end })
+        .done(function( data ) {
+          var data = $.parseJSON(data);
+          addGrowlMessage(data.status, data.message);
+          $("#row-" + id).addClass("success");
+      });
+
+  });
+
+  $(".delete").click(function(e){
+      e.preventDefault();
+      var obj = $(this);
+      var id = obj.attr("data-id");
+      var result = confirm("Do you want to delete this date?");
+      if (result) {
+          $.post( "/leader/index/deleteEventDate/", { id: id })
+            .done(function( data ) {
+              var data = $.parseJSON(data);
+              addGrowlMessage(data.status, data.message);
+              $("#row-" + id).fadeOut();
+          });
+      }
+  });
 
   $('.form_datetime2').datetimepicker1({
     format: 'MMM DD, YYYY',
