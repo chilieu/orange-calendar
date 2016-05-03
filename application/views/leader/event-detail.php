@@ -5,10 +5,11 @@
 <button class="btn btn-primary" id="update-event" data-id="<?=$event->result()[0]->id;?>">Save</button>
 <div class="col-md-12 col-sm-12">
 <table class="table table-hover table-striped" id="event-table">
-  <form action="" id="add-new-event-date" method="POST">
+  <form id="add-new-event-date" method="POST" >
+    <input type="hidden" value="<?=$event->result()[0]->id;?>" name="event_id">
     <tbody>
         <td class="text-center">
-                <select class="form-control" id="" name="room">
+                <select class="form-control" name="room_id">
 
                   <optgroup label="At Church">
                     <?php foreach($rooms->result() as $k => $r):?>
@@ -109,7 +110,19 @@
 $(document).ready(function() {
 
   $("#add-date").click(function(e){
-    e.preventDefault();
+      e.preventDefault();
+      var obj = $(this);
+      var form = $("#add-new-event-date");
+
+      $.ajax({
+        type: "POST",
+        url: "/leader/index/addEventDate/",
+        data: form.serialize(),
+        success: function( response ) {
+          var data = $.parseJSON(response);
+          addGrowlMessage(data.status, data.message);
+        }
+      });
 
   });
 
